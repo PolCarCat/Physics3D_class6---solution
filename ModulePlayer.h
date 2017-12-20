@@ -22,7 +22,7 @@ public:
 public:
 
 	PhysVehicle3D* vehicle;
-	vec3 pos = { 0,0,0 };
+	vec3 pos = ( 0,0,0 );
 	float turn;
 	float acceleration;
 	float brake;

@@ -151,9 +151,9 @@ update_status ModulePlayer::Update(float dt)
 
 
 	//Meh
-	if (App->player->pos.p >= 100)
+	if (pos.z >= 100)
 	{
-		App->player->vehicle->SetPos(App->player->pos.s, 1.3f, -100);
+		App->player->vehicle->SetPos(pos.x, pos.y, -100);
 	}
 
 	btTransform trans = vehicle->vehicle->getChassisWorldTransform();
