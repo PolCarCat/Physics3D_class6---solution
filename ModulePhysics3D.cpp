@@ -63,6 +63,14 @@ bool ModulePhysics3D::Start()
 		btRigidBody::btRigidBodyConstructionInfo rbInfo(0.0f, myMotionState, colShape);
 
 		btRigidBody* body = new btRigidBody(rbInfo);
+
+
+		c.size = { 100,1,600 };
+		c.color = { 255,255,255,255 };
+		c.SetPos( 0,0,0 );
+		floor = App->physics->AddBody(c, 10.0f);
+
+
 		world->addRigidBody(body);
 	}
 
@@ -114,7 +122,8 @@ update_status ModulePhysics3D::Update(float dt)
 {
 	if(App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		debug = !debug;
-
+	
+	c.Render();
 	if(debug == true)
 	{
 		world->debugDrawWorld();

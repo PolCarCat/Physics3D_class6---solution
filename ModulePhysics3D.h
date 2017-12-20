@@ -38,6 +38,8 @@ public:
 private:
 
 	bool debug;
+	PhysBody3D* floor;		
+	Cube c;
 
 	btDefaultCollisionConfiguration*	collision_conf;
 	btCollisionDispatcher*				dispatcher;
@@ -52,6 +54,7 @@ private:
 	p2List<btDefaultMotionState*> motions;
 	p2List<btTypedConstraint*> constraints;
 	p2List<PhysVehicle3D*> vehicles;
+
 };
 
 class DebugDrawer : public btIDebugDraw

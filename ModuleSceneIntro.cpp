@@ -4,6 +4,7 @@
 #include "Primitive.h"
 #include "PhysBody3D.h"
 
+
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 }
@@ -23,9 +24,12 @@ bool ModuleSceneIntro::Start()
 	s.size = vec3(5, 3, 1);
 	s.SetPos(0, 2.5f, 20);
 
-	sensor = App->physics->AddBody(s, 0.0f);
-	sensor->SetAsSensor(true);
-	sensor->collision_listeners.add(this);
+	//sensor = App->physics->AddBody(s, 0.0f);
+	//sensor->SetAsSensor(true);
+	//sensor->collision_listeners.add(this);
+
+
+
 
 	return ret;
 }
@@ -46,12 +50,14 @@ update_status ModuleSceneIntro::Update(float dt)
 	camera_pos.p -= 10;
 	camera_pos.y += 5;
 
+
+
 	p.axis = true;
-	p.Render();
+	
 	App->camera->LookAt(App->player->pos);
 	App->camera->Position = camera_pos;
-	sensor->GetTransform(&s.transform);
-	s.Render();
+	//sensor->GetTransform(&s.transform);
+	//s.Render();
 
 	return UPDATE_CONTINUE;
 }

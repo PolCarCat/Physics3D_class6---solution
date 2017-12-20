@@ -148,6 +148,12 @@ update_status ModulePlayer::Update(float dt)
 	App->window->SetTitle(title);
 
 
+	//Meh
+	if (App->player->pos.p >= 100)
+	{
+		App->player->vehicle->SetPos(App->player->pos.s, 1.5f, -100);
+	}
+
 	btTransform trans = vehicle->vehicle->getChassisWorldTransform();
 	btVector3 btpos = trans.getOrigin();
 	pos = { btpos.getX(), btpos.getY(), btpos.getZ()};
