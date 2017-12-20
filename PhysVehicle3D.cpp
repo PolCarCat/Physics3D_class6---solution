@@ -29,8 +29,8 @@ void PhysVehicle3D::Render()
 
 	for(int i = 0; i < vehicle->getNumWheels(); ++i)
 	{
-		wheel.radius = info.wheels[0].radius;
-		wheel.height = info.wheels[0].width;
+		wheel.radius = info.wheels[i].radius;
+		wheel.height = info.wheels[i].width;
 
 		vehicle->updateWheelTransform(i);
 		vehicle->getWheelInfo(i).m_worldTransform.getOpenGLMatrix(&wheel.transform);

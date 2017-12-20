@@ -66,7 +66,7 @@ bool ModulePhysics3D::Start()
 
 
 		c.size = { 100,1,600 };
-		c.color = { 255,255,255,255 };
+		c.color.Set(3.0f, 3.0f, 3.5f);
 		c.SetPos( 0,0,0 );
 		floor = App->physics->AddBody(c, 10.0f);
 

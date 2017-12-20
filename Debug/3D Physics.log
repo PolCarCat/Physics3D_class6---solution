@@ -1,3 +1,14 @@
-﻿  ModulePlayer.cpp
-  3D Physics.vcxproj -> C:\Users\polcc\Desktop\Physics3D_class6 - solution\Debug\3D Physics - class6.exe
-  3D Physics.vcxproj -> C:\Users\polcc\Desktop\Physics3D_class6 - solution\Debug\3D Physics - class6.pdb (Partial PDB)
+﻿  Application.cpp
+  Generando código...
+  Compilando...
+  ModuleWindow.cpp
+  ModuleSceneIntro.cpp
+  ModuleRenderer3D.cpp
+  ModulePlayer.cpp
+  ModulePhysics3D.cpp
+  ModuleInput.cpp
+  ModuleCamera3D.cpp
+  ModuleAudio.cpp
+  Main.cpp
+  Generando código...
+  3D Physics.vcxproj -> C:\Users\Pol\Documents\GitHub\Physics3D_class6---solution\Debug\3D Physics - class6.exe
