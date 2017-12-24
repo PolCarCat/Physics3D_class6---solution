@@ -38,8 +38,8 @@ public:
 private:
 
 	bool debug;
-	PhysBody3D* floor;		
 	Cube c;
+
 
 	btDefaultCollisionConfiguration*	collision_conf;
 	btCollisionDispatcher*				dispatcher;

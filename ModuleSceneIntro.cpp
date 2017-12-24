@@ -28,8 +28,15 @@ bool ModuleSceneIntro::Start()
 	//sensor->SetAsSensor(true);
 	//sensor->collision_listeners.add(this);
 
+	Cube random_c;
+	random_c.size = { 5 ,5 ,5 };
+	random_c.SetPos(0, 5, 50);
+	random_c.color = { 0,0,0,0 };
 
 
+	PhysBody3D* random = App->physics->AddBody(random_c, 0);
+
+	Blocks.add(&random_c);
 
 	return ret;
 }
@@ -50,10 +57,16 @@ update_status ModuleSceneIntro::Update(float dt)
 	camera_pos.p -= 10;
 	camera_pos.y += 5;
 
+	for (p2List_item<Primitive*>* item = Blocks.getFirst(); item; item = item->next)
+	{
+		item->data->Render();
+	}
+
 
 
 	p.axis = true;
-	
+	p.wire = true;
+	p.Render();
 	App->camera->LookAt(App->player->pos);
 	App->camera->Position = camera_pos;
 	//sensor->GetTransform(&s.transform);

@@ -24,6 +24,7 @@ public:
 
 public:
 	Cube s;
+	p2List<Primitive*> Blocks;
 	PhysBody3D* sensor;
 
 };

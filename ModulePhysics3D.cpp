@@ -65,13 +65,14 @@ bool ModulePhysics3D::Start()
 		btRigidBody* body = new btRigidBody(rbInfo);
 
 
-		c.size = { 100,1,600 };
+		c.size = { 100,0,600 };
 		c.color.Set(3.0f, 3.0f, 3.5f);
 		c.SetPos( 0,0,0 );
-		floor = App->physics->AddBody(c, 10.0f);
-
 
 		world->addRigidBody(body);
+
+		
+
 	}
 
 	return true;
