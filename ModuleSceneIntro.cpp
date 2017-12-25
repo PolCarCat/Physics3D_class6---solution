@@ -35,15 +35,15 @@ bool ModuleSceneIntro::Start()
 	random_c.SetRotation(75, { 1,0,0 });
 
 	left_ramp.size = { 20,50,600 };
-	left_ramp.SetPos(60, 0, 0);
-	left_ramp.SetRotation(300, { 0,0,1 });
+	left_ramp.SetPos(60, -6, 0);
+	left_ramp.SetRotation(280, { 0,0,1 });
 	App->physics->AddBody(left_ramp, 0);
 
 
 	
 	right_ramp.size = { 20,50,600 };
-	right_ramp.SetPos(-60, 0, 0);
-	right_ramp.SetRotation(60, { 0,0,1 });
+	right_ramp.SetPos(-60, -6, 0);
+	right_ramp.SetRotation(80, { 0,0,1 });
 	App->physics->AddBody(right_ramp, 0);
 
 

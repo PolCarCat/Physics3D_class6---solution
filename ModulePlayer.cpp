@@ -22,14 +22,14 @@ bool ModulePlayer::Start()
 
 	// Car properties ----------------------------------------
 	car.chassis_size.Set(2, 1, 4);
-	car.chassis_offset.Set(0, 0.5f, 0);
+	car.chassis_offset.Set(0, 0.7f, 0);
 	car.mass = 500.0f;
 	car.suspensionStiffness = 15.88f;
 	car.suspensionCompression = 0.83f;
 	car.suspensionDamping = 0.88f;
-	car.maxSuspensionTravelCm = 500.0f;
+	car.maxSuspensionTravelCm = 50.0f;
 	car.frictionSlip = 50.5;
-	car.maxSuspensionForce = 3000.0f;
+	car.maxSuspensionForce = 4000.0f;
 
 	// Wheel properties ---------------------------------------
 	float connection_height = 1.2f;
@@ -41,7 +41,7 @@ bool ModulePlayer::Start()
 	// Don't change anything below this line ------------------
 
 	float front_width = car.chassis_size.x*0.8f;
-	float back_width = car.chassis_size.x;
+	float back_width = car.chassis_size.x*1.1f;
 	float half_length = car.chassis_size.z*0.7f;
 	
 	vec3 direction(0,-1,0);
@@ -117,7 +117,7 @@ update_status ModulePlayer::Update(float dt)
 {
 	turn = acceleration = brake = 0.0f;
 
-	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT && vehicle->GetKmh() < MAX_SPEED)
 	{
 		acceleration = MAX_ACCELERATION;
 	}
