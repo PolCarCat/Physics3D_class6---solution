@@ -129,7 +129,7 @@ update_status ModulePhysics3D::Update(float dt)
 
 	for (p2List_item<PhysBody3D*>* item = bodies.getFirst(); item; item = item->next)
 	{
-		//item->data->shape->Render();
+		item->data->shape->Render();
 	}
 
 	if(debug == true)
@@ -228,8 +228,8 @@ PhysBody3D* ModulePhysics3D::AddBody(const Sphere& sphere, float mass)
 	btRigidBody* body = new btRigidBody(rbInfo);
 	PhysBody3D* pbody = new PhysBody3D(body);
 
-	Sphere s = sphere;
-	pbody->shape = &s;
+	Sphere* s = new Sphere(sphere);
+	pbody->shape = s;
 
 	world->addRigidBody(body);
 	bodies.add(pbody);
@@ -259,8 +259,8 @@ PhysBody3D* ModulePhysics3D::AddBody(const Cube& cube, float mass)
 	PhysBody3D* pbody = new PhysBody3D(body);
 
 
-	Cube s = cube;
-	pbody->shape = &s;
+	Cube* s = new Cube(cube);
+	pbody->shape = s;
 
 	world->addRigidBody(body);
 	bodies.add(pbody);
@@ -288,8 +288,8 @@ PhysBody3D* ModulePhysics3D::AddBody(const Cylinder& cylinder, float mass)
 	btRigidBody* body = new btRigidBody(rbInfo);
 	PhysBody3D* pbody = new PhysBody3D(body);
 
-	Cylinder s = cylinder;
-	pbody->shape = &s;
+	Cylinder* s = new Cylinder(cylinder);
+	pbody->shape = s;
 
 	world->addRigidBody(body);
 	bodies.add(pbody);
