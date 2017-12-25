@@ -150,18 +150,9 @@ update_status ModulePlayer::Update(float dt)
 	sprintf_s(title, "%.1f Km/h", vehicle->GetKmh());
 	App->window->SetTitle(title);
 
-
-	//Meh
-	if (pos.z >= 200)
-	{
-
-		App->player->vehicle->SetPos(App->player->pos.s, App->player->pos.t, -200);
-
-	}
-
 	btTransform trans = vehicle->vehicle->getChassisWorldTransform();
 	btVector3 btpos = trans.getOrigin();
-	pos = { btpos.getX(), btpos.getY(), btpos.getZ()};
+	pos = { btpos.getX(), btpos.getY(), btpos.getZ() };
 	return UPDATE_CONTINUE;
 }
 

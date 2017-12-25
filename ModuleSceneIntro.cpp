@@ -3,6 +3,7 @@
 #include "ModuleSceneIntro.h"
 #include "Primitive.h"
 #include "PhysBody3D.h"
+#include "PhysVehicle3D.h"
 
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
@@ -63,18 +64,29 @@ bool ModuleSceneIntro::CleanUp()
 // Update
 update_status ModuleSceneIntro::Update(float dt)
 {
+	float camera_speed = 50.0f;
 	Plane p(0, 1, 0, 0);
 	vec3 camera_pos = App->player->pos;
 	camera_pos.p -= 20;
-	camera_pos.y = 10;
+
+	//Meh
+	if (App->player->pos.z >= 200)
+	{
+		vec3 camera_diff = App->camera->Position - App->player->pos;
+		App->player->vehicle->SetPos(App->player->pos.s, App->player->pos.t, -200);
+		btVector3 btpos = App->player->vehicle->vehicle->getChassisWorldTransform().getOrigin();
+		App->player->pos = { btpos.getX(), btpos.getY(), btpos.getZ() };
+		App->camera->Position = App->player->pos + camera_diff;
+	}
 
 	left_ramp.Render();
 	right_ramp.Render();
 	p.axis = true;
 	p.wire = true;
 	//p.Render();
+	App->camera->Move(normalize(camera_pos - App->camera->Position) * dt * camera_speed);
+	App->camera->Position.y = 10.0f;
 	App->camera->LookAt(App->player->pos);
-	App->camera->Position = camera_pos;
 	//sensor->GetTransform(&s.transform);
 	//s.Render();
 
