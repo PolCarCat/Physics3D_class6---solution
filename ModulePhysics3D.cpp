@@ -65,9 +65,10 @@ bool ModulePhysics3D::Start()
 		btRigidBody* body = new btRigidBody(rbInfo);
 
 
-		c.size = { 100,0,600 };
-		c.color.Set(3.0f, 3.0f, 3.5f);
-		c.SetPos( 0,0,0 );
+		floor.size = { 100,0,600 };
+		floor.color.Set(3.0f, 3.0f, 3.5f);
+		floor.SetPos( 0,0,0 );
+
 
 		world->addRigidBody(body);
 
@@ -124,7 +125,13 @@ update_status ModulePhysics3D::Update(float dt)
 	if(App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		debug = !debug;
 	
-	c.Render();
+	floor.Render();
+
+	for (p2List_item<PhysBody3D*>* item = bodies.getFirst(); item; item = item->next)
+	{
+		//item->data->shape->Render();
+	}
+
 	if(debug == true)
 	{
 		world->debugDrawWorld();
@@ -221,6 +228,9 @@ PhysBody3D* ModulePhysics3D::AddBody(const Sphere& sphere, float mass)
 	btRigidBody* body = new btRigidBody(rbInfo);
 	PhysBody3D* pbody = new PhysBody3D(body);
 
+	Sphere s = sphere;
+	pbody->shape = &s;
+
 	world->addRigidBody(body);
 	bodies.add(pbody);
 
@@ -248,6 +258,10 @@ PhysBody3D* ModulePhysics3D::AddBody(const Cube& cube, float mass)
 	btRigidBody* body = new btRigidBody(rbInfo);
 	PhysBody3D* pbody = new PhysBody3D(body);
 
+
+	Cube s = cube;
+	pbody->shape = &s;
+
 	world->addRigidBody(body);
 	bodies.add(pbody);
 
@@ -273,6 +287,9 @@ PhysBody3D* ModulePhysics3D::AddBody(const Cylinder& cylinder, float mass)
 
 	btRigidBody* body = new btRigidBody(rbInfo);
 	PhysBody3D* pbody = new PhysBody3D(body);
+
+	Cylinder s = cylinder;
+	pbody->shape = &s;
 
 	world->addRigidBody(body);
 	bodies.add(pbody);

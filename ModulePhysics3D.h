@@ -38,7 +38,7 @@ public:
 private:
 
 	bool debug;
-	Cube c;
+	Cube floor;
 
 
 	btDefaultCollisionConfiguration*	collision_conf;

@@ -4,6 +4,7 @@
 #include "p2List.h"
 
 class btRigidBody;
+class Primitive;
 class Module;
 
 // =================================================
@@ -23,6 +24,7 @@ public:
 
 private:
 	btRigidBody* body = nullptr;
+	Primitive* shape = nullptr;
 	bool is_sensor = false;
 
 public:

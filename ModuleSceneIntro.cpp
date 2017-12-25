@@ -29,14 +29,25 @@ bool ModuleSceneIntro::Start()
 	//sensor->collision_listeners.add(this);
 
 	Cube random_c;
-	random_c.size = { 5 ,5 ,5 };
-	random_c.SetPos(0, 5, 50);
-	random_c.color = { 0,0,0,0 };
+	random_c.size = { 20 ,40 ,5 };
+	random_c.SetPos(0, 0, 50);
+	random_c.SetRotation(75, { 1,0,0 });
+
+	left_ramp.size = { 20,50,600 };
+	left_ramp.SetPos(60, 0, 0);
+	left_ramp.SetRotation(300, { 0,0,1 });
+	App->physics->AddBody(left_ramp, 0);
+
+
+	
+	right_ramp.size = { 20,50,600 };
+	right_ramp.SetPos(-60, 0, 0);
+	right_ramp.SetRotation(60, { 0,0,1 });
+	App->physics->AddBody(right_ramp, 0);
 
 
 	PhysBody3D* random = App->physics->AddBody(random_c, 0);
 
-	Blocks.add(&random_c);
 
 	return ret;
 }
@@ -54,19 +65,14 @@ update_status ModuleSceneIntro::Update(float dt)
 {
 	Plane p(0, 1, 0, 0);
 	vec3 camera_pos = App->player->pos;
-	camera_pos.p -= 10;
-	camera_pos.y += 5;
+	camera_pos.p -= 20;
+	camera_pos.y = 10;
 
-	for (p2List_item<Primitive*>* item = Blocks.getFirst(); item; item = item->next)
-	{
-		item->data->Render();
-	}
-
-
-
+	left_ramp.Render();
+	right_ramp.Render();
 	p.axis = true;
 	p.wire = true;
-	p.Render();
+	//p.Render();
 	App->camera->LookAt(App->player->pos);
 	App->camera->Position = camera_pos;
 	//sensor->GetTransform(&s.transform);

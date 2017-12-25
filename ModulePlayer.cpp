@@ -22,14 +22,14 @@ bool ModulePlayer::Start()
 
 	// Car properties ----------------------------------------
 	car.chassis_size.Set(2, 1, 4);
-	car.chassis_offset.Set(0, 1.5, 0);
+	car.chassis_offset.Set(0, 0.5f, 0);
 	car.mass = 500.0f;
 	car.suspensionStiffness = 15.88f;
 	car.suspensionCompression = 0.83f;
 	car.suspensionDamping = 0.88f;
-	car.maxSuspensionTravelCm = 1000.0f;
+	car.maxSuspensionTravelCm = 500.0f;
 	car.frictionSlip = 50.5;
-	car.maxSuspensionForce = 6000.0f;
+	car.maxSuspensionForce = 3000.0f;
 
 	// Wheel properties ---------------------------------------
 	float connection_height = 1.2f;
@@ -40,7 +40,7 @@ bool ModulePlayer::Start()
 
 	// Don't change anything below this line ------------------
 
-	float front_width = car.chassis_size.x*0.7f;
+	float front_width = car.chassis_size.x*0.8f;
 	float back_width = car.chassis_size.x;
 	float half_length = car.chassis_size.z*0.7f;
 	
@@ -138,6 +138,7 @@ update_status ModulePlayer::Update(float dt)
 	{
 		brake = BRAKE_POWER;
 	}
+	
 
 	vehicle->ApplyEngineForce(acceleration);
 	vehicle->Turn(-turn);
@@ -151,10 +152,10 @@ update_status ModulePlayer::Update(float dt)
 
 
 	//Meh
-	if (pos.z >= 100)
+	if (pos.z >= 200)
 	{
 
-		App->player->vehicle->SetPos(App->player->pos.s, App->player->pos.t, -100);
+		App->player->vehicle->SetPos(App->player->pos.s, App->player->pos.t, -200);
 
 	}
 
