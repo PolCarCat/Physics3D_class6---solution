@@ -71,9 +71,6 @@ bool ModulePhysics3D::Start()
 
 
 		world->addRigidBody(body);
-
-		
-
 	}
 
 	return true;

@@ -19,11 +19,11 @@ bool ModuleSceneIntro::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 
-	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
+	//App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(App->player->pos);
 
-	s.size = vec3(5, 3, 1);
-	s.SetPos(0, 2.5f, 20);
+	//s.size = vec3(5, 3, 1);
+	//s.SetPos(0, 2.5f, 20);
 
 	//sensor = App->physics->AddBody(s, 0.0f);
 	//sensor->SetAsSensor(true);
