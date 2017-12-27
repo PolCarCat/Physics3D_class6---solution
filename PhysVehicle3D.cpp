@@ -5,8 +5,23 @@
 // ----------------------------------------------------------------------------
 VehicleInfo::~VehicleInfo()
 {
-	//if(wheels != NULL)
-		//delete wheels;
+	if(wheels != NULL)
+		delete[] wheels;
+}
+
+VehicleInfo::VehicleInfo()
+{
+}
+
+VehicleInfo::VehicleInfo(const VehicleInfo & other) :
+	chassis_offset(other.chassis_offset), chassis_size(other.chassis_size), frictionSlip(other.frictionSlip), mass(other.mass), maxSuspensionForce(other.maxSuspensionForce),
+	maxSuspensionTravelCm(other.maxSuspensionTravelCm), num_wheels(other.num_wheels), suspensionCompression(other.suspensionCompression), suspensionDamping(other.suspensionDamping),
+	suspensionStiffness(other.suspensionStiffness)
+{
+	wheels = new Wheel[num_wheels];
+	for (uint i = 0; i < num_wheels; i++) {
+		wheels[i] = other.wheels[i];
+	}
 }
 
 // ----------------------------------------------------------------------------
