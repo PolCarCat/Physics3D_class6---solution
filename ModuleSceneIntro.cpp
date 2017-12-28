@@ -39,8 +39,6 @@ bool ModuleSceneIntro::Start()
 	left_ramp.SetRotation(280, { 0,0,1 });
 	App->physics->AddBody(left_ramp, 0);
 
-
-	
 	right_ramp.size = { 20,50,600 };
 	right_ramp.SetPos(-60, -6, 0);
 	right_ramp.SetRotation(80, { 0,0,1 });
@@ -64,10 +62,8 @@ bool ModuleSceneIntro::CleanUp()
 // Update
 update_status ModuleSceneIntro::Update(float dt)
 {
-	float camera_speed = 50.0f;
+	float camera_speed = 10.0f;
 	Plane p(0, 1, 0, 0);
-	vec3 camera_pos = App->player->pos;
-	camera_pos.p -= 20;
 
 	//Meh
 	if (App->player->pos.z >= 200)
@@ -79,12 +75,15 @@ update_status ModuleSceneIntro::Update(float dt)
 		App->camera->Position = App->player->pos + camera_diff;
 	}
 
+	vec3 camera_pos = App->player->pos;
+	camera_pos.p -= 20;
+
 	left_ramp.Render();
 	right_ramp.Render();
 	p.axis = true;
 	p.wire = true;
 	//p.Render();
-	App->camera->Move(normalize(camera_pos - App->camera->Position) * dt * camera_speed);
+	App->camera->Move(normalize(camera_pos - App->camera->Position) * dt * camera_speed * length(camera_pos - App->camera->Position));
 	App->camera->Position.y = 10.0f;
 	App->camera->LookAt(App->player->pos);
 	//sensor->GetTransform(&s.transform);

@@ -6,7 +6,6 @@
 #include "glmath.h"
 
 enum ObstacleType {
-	RAMP,
 	WALL,
 	BOULDER,
 };
@@ -24,9 +23,11 @@ struct ObstacleInfo
 struct SegmentInfo
 {
 	~SegmentInfo();
+	SegmentInfo();
+	SegmentInfo(const SegmentInfo&);
 
-	ObstacleInfo* obstacles;
-
+	ObstacleInfo* obstacles = nullptr;
+	uint num_obstacles = 0;
 	vec3 pos;
 	vec3 rotation;
 };
@@ -37,7 +38,11 @@ public:
 	PathSegment(btRigidBody* main_body, const SegmentInfo& info);
 	~PathSegment();
 
+	void Render();
+
+private:
 	SegmentInfo info;
+	p2DynArray<PhysBody3D*> obstacles;
 };
 
 #endif
