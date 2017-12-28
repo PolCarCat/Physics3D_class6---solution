@@ -4,6 +4,7 @@
 #include "Primitive.h"
 #include "PhysBody3D.h"
 #include "PhysVehicle3D.h"
+#include "PugiXml\src\pugixml.hpp"
 
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
@@ -18,6 +19,14 @@ bool ModuleSceneIntro::Start()
 {
 	LOG("Loading Intro assets");
 	bool ret = true;
+
+	pugi::xml_document segment_doc;
+	pugi::xml_parse_result result = segment_doc.load_file("segments.xml");
+
+	if (result == NULL)
+		LOG("Could not load map xml file config.xml. pugi error: %s", result.description());
+	else
+		segment_doc.child("config");
 
 	//App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(App->player->pos);
@@ -95,5 +104,9 @@ update_status ModuleSceneIntro::Update(float dt)
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
 	LOG("Hit!");
+}
+
+void ModuleSceneIntro::AddRoadSegment()
+{
 }
 

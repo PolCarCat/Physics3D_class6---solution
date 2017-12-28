@@ -3,6 +3,7 @@
 #include "p2DynArray.h"
 #include "Globals.h"
 #include "Primitive.h"
+#include "PathSegment.h"
 
 #define MAX_SNAKE 2
 
@@ -22,10 +23,13 @@ public:
 
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 
+	void AddRoadSegment();
+
 public:
 	Cube s;
 	PhysBody3D* sensor;
 	Cube right_ramp;
 	Cube left_ramp;
 
+	p2List<SegmentInfo> segments;
 };
