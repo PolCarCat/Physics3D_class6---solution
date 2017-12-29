@@ -38,8 +38,6 @@ public:
 private:
 
 	bool debug;
-	Cube floor;
-
 
 	btDefaultCollisionConfiguration*	collision_conf;
 	btCollisionDispatcher*				dispatcher;

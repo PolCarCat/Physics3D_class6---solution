@@ -64,12 +64,6 @@ bool ModulePhysics3D::Start()
 
 		btRigidBody* body = new btRigidBody(rbInfo);
 
-
-		floor.size = { 100,0,600 };
-		floor.color.Set(3.0f, 3.0f, 3.5f);
-		floor.SetPos( 0,0,0 );
-
-
 		world->addRigidBody(body);
 	}
 
@@ -122,8 +116,6 @@ update_status ModulePhysics3D::Update(float dt)
 	if(App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		debug = !debug;
 	
-	floor.Render();
-
 	for (p2List_item<PhysBody3D*>* item = bodies.getFirst(); item; item = item->next)
 	{
 		item->data->shape->Render();

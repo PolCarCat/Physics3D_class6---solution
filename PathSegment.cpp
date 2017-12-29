@@ -11,11 +11,22 @@ SegmentInfo::SegmentInfo()
 {
 }
 
-SegmentInfo::SegmentInfo(const SegmentInfo & other) : pos(other.pos), rotation(other.rotation), num_obstacles(other.num_obstacles)
+SegmentInfo::SegmentInfo(const SegmentInfo & other) : rotation(other.rotation), num_obstacles(other.num_obstacles)
 {
 	obstacles = new ObstacleInfo[num_obstacles];
 	for (uint i = 0; i < num_obstacles * sizeof(ObstacleInfo); i++)
 		obstacles[i] = other.obstacles[i];
+}
+
+const SegmentInfo& SegmentInfo::operator =(const SegmentInfo & other)
+{
+	rotation = other.rotation;
+	num_obstacles = other.num_obstacles;
+	obstacles = new ObstacleInfo[num_obstacles];
+	for (uint i = 0; i < num_obstacles * sizeof(ObstacleInfo); i++)
+		obstacles[i] = other.obstacles[i];
+
+	return *this;
 }
 
 PathSegment::PathSegment(btRigidBody* main_body, const SegmentInfo& info) : PhysBody3D(main_body), info(info)

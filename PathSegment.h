@@ -26,9 +26,10 @@ struct SegmentInfo
 	SegmentInfo();
 	SegmentInfo(const SegmentInfo&);
 
+	const SegmentInfo& operator =(const SegmentInfo&);
+
 	ObstacleInfo* obstacles = nullptr;
 	uint num_obstacles = 0;
-	vec3 pos;
 	vec3 rotation;
 };
 

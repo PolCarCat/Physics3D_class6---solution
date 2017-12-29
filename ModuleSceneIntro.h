@@ -26,10 +26,10 @@ public:
 	void AddRoadSegment();
 
 public:
-	Cube s;
+	float prev_base_pos = 0.0f;
+	Cube floor, left_ramp, right_ramp;
 	PhysBody3D* sensor;
-	Cube right_ramp;
-	Cube left_ramp;
 
+	void LoadSegments();
 	p2List<SegmentInfo> segments;
 };
