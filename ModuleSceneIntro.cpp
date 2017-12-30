@@ -167,17 +167,7 @@ void ModuleSceneIntro::LoadSegments()
 				o_info.rotation.x = obstacle_node.attribute("RotationX").as_float(0.0f);
 				o_info.rotation.y = obstacle_node.attribute("RotationY").as_float(0.0f);
 				o_info.rotation.z = obstacle_node.attribute("RotationZ").as_float(0.0f);
-				switch (obstacle_node.attribute("Type").as_int(0)) {
-				case WALL:
-					o_info.type = WALL;
-					break;
-				case BOULDER:
-					o_info.type = BOULDER;
-					break;
-				default:
-					o_info.type = WALL;
-					break;
-				}
+				o_info.type = (ObstacleType)obstacle_node.attribute("Type").as_int(0);
 				info.obstacles[i] = o_info;
 			}
 			segments.add(info);
