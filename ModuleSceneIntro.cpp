@@ -116,7 +116,7 @@ void ModuleSceneIntro::AddRoadSegment()
 
 	Cube base;
 	SegmentInfo info;
-	segments.at(segment_index, info);
+	segments.at(segment_index);
 	base.color = White;
 	base.size = { 40, 20, 5 };
 	App->physics->AddBody(base, 0.0f);

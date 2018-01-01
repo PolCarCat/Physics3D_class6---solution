@@ -6,9 +6,10 @@
 
 ModuleInput::ModuleInput(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
-	keyboard = new KEY_STATE[MAX_KEYS];
-	memset(keyboard, KEY_IDLE, sizeof(KEY_STATE) * MAX_KEYS);
-	memset(mouse_buttons, KEY_IDLE, sizeof(KEY_STATE) * MAX_MOUSE_BUTTONS);
+
+	keyboard = new keyEvent[MAX_KEYS];
+	memset(keyboard, { KEY_IDLE }, sizeof(keyEvent) * MAX_KEYS);
+	memset(mouse_buttons, { KEY_IDLE }, sizeof(keyEvent) * MAX_MOUSE_BUTTONS);
 }
 
 // Destructor
@@ -44,17 +45,17 @@ update_status ModuleInput::PreUpdate(float dt)
 	{
 		if(keys[i] == 1)
 		{
-			if(keyboard[i] == KEY_IDLE)
-				keyboard[i] = KEY_DOWN;
+			if(keyboard[i].keyState == KEY_IDLE)
+				keyboard[i].keyState = KEY_DOWN;
 			else
-				keyboard[i] = KEY_REPEAT;
+				keyboard[i].keyState = KEY_REPEAT;
 		}
 		else
 		{
-			if(keyboard[i] == KEY_REPEAT || keyboard[i] == KEY_DOWN)
-				keyboard[i] = KEY_UP;
+			if(keyboard[i].keyState == KEY_REPEAT || keyboard[i].keyState == KEY_DOWN)
+				keyboard[i].keyState = KEY_UP;
 			else
-				keyboard[i] = KEY_IDLE;
+				keyboard[i].keyState = KEY_IDLE;
 		}
 	}
 
@@ -68,17 +69,17 @@ update_status ModuleInput::PreUpdate(float dt)
 	{
 		if(buttons & SDL_BUTTON(i))
 		{
-			if(mouse_buttons[i] == KEY_IDLE)
-				mouse_buttons[i] = KEY_DOWN;
+			if(mouse_buttons[i].keyState == KEY_IDLE)
+				mouse_buttons[i].keyState = KEY_DOWN;
 			else
-				mouse_buttons[i] = KEY_REPEAT;
+				mouse_buttons[i].keyState = KEY_REPEAT;
 		}
 		else
 		{
-			if(mouse_buttons[i] == KEY_REPEAT || mouse_buttons[i] == KEY_DOWN)
-				mouse_buttons[i] = KEY_UP;
+			if(mouse_buttons[i].keyState == KEY_REPEAT || mouse_buttons[i].keyState == KEY_DOWN)
+				mouse_buttons[i].keyState = KEY_UP;
 			else
-				mouse_buttons[i] = KEY_IDLE;
+				mouse_buttons[i].keyState = KEY_IDLE;
 		}
 	}
 
@@ -114,7 +115,7 @@ update_status ModuleInput::PreUpdate(float dt)
 		}
 	}
 
-	if(quit == true || keyboard[SDL_SCANCODE_ESCAPE] == KEY_UP)
+	if(quit == true || keyboard[SDL_SCANCODE_ESCAPE].keyState == KEY_UP)
 		return UPDATE_STOP;
 
 	return UPDATE_CONTINUE;
