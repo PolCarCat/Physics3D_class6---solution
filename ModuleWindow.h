@@ -26,6 +26,10 @@ public:
 
 	//The surface contained by the window
 	SDL_Surface* screen_surface;
+
+	void GetWindowSize(uint& width, uint& height) const  {width = SCREEN_WIDTH * SCREEN_SIZE; height = SCREEN_HEIGHT * SCREEN_SIZE; }
+
+	float GetScale() const { return SCREEN_SIZE; }
 };
 
 #endif // __ModuleWindow_H__

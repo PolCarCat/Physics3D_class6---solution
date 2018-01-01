@@ -12,6 +12,10 @@
 #include "ModuleCamera3D.h"
 #include "ModulePhysics3D.h"
 #include "ModulePlayer.h"
+#include "j1Fonts.h"
+#include "j1Textures.h"
+#include "j1Gui.h"
+#include "ModuleRender2D.h"
 
 class Application
 {
@@ -21,6 +25,10 @@ public:
 	ModuleAudio* audio;
 	ModuleSceneIntro* scene_intro;
 	ModuleRenderer3D* renderer3D;
+	j1Render* render;
+	j1Fonts* font;
+	j1Gui* gui;
+	j1Textures* tex;
 	ModuleCamera3D* camera;
 	ModulePhysics3D* physics;
 	ModulePlayer* player;
@@ -46,3 +54,5 @@ private:
 	void PrepareUpdate();
 	void FinishUpdate();
 };
+
+extern Application* App;

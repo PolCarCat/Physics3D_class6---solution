@@ -2,6 +2,7 @@
 #define __p2List_H__
 
 #include "Globals.h"
+#include "p2Defs.h"
 
 /**
 * Contains items from double linked list
@@ -98,40 +99,53 @@ public:
 	/**
 	* Find by index
 	*/
-	bool at(unsigned int index, tdata& data) const
+	const p2List_item<tdata>* at(unsigned int index) const
 	{
-		bool ret = false;
-		unsigned int i = 0;
-		p2List_item<tdata>*   p_data = start;
+		long                  pos = 0;
+		p2List_item<tdata>*   p_item = start;
 
-		for(unsigned int i = 0; i < index && p_data != NULL; ++i)
-			p_data = p_data->next;
-
-		if(p_data != NULL)
+		while (p_item != NULL)
 		{
-			ret = true;
-			data = p_data->data;
+			if (pos++ == index)
+				break;
+
+			p_item = p_item->next;
 		}
 
-		return ret;
+		return p_item;
 	}
 
+	 p2List_item<tdata>* atnc(unsigned int index) const
+	{
+		long                  pos = 0;
+		p2List_item<tdata>*   p_item = start;
+
+		while (p_item != NULL)
+		{
+			if (pos++ == index)
+				break;
+
+			p_item = p_item->next;
+		}
+
+		return p_item;
+	}
 	/**
 	* Deletes an item from the list
 	*/
 	bool del(p2List_item<tdata>* item)
 	{
-		if(item == NULL)
+		if (item == NULL)
 		{
 			return (false);
 		}
 
 		// Now reconstruct the list
-		if(item->prev != NULL)
+		if (item->prev != NULL)
 		{
 			item->prev->next = item->next;
 
-			if(item->next != NULL)
+			if (item->next != NULL)
 			{
 				item->next->prev = item->prev;
 			}
@@ -142,7 +156,7 @@ public:
 		}
 		else
 		{
-			if(item->next)
+			if (item->next)
 			{
 				item->next->prev = NULL;
 				start = item->next;
@@ -153,7 +167,7 @@ public:
 			}
 		}
 
-		delete item;
+		RELEASE(item);
 		--size;
 		return(true);
 	}
@@ -214,5 +228,69 @@ public:
 
 		return (NULL);
 	}
+
+	tdata& operator  [](const unsigned int index)
+	{
+		long                  pos;
+		p2List_item<tdata>*   p_item;
+		pos = 0;
+		p_item = start;
+
+		while (p_item != NULL)
+		{
+			if (pos == index)
+			{
+				break;
+			}
+
+			++pos;
+			p_item = p_item->next;
+		}
+
+		return(p_item->data);
+	}
+
+	/**
+	* const read operator access directly to a position in the list
+	*/
+	const tdata& operator  [](const unsigned int index) const
+	{
+		long                  pos;
+		p2List_item<tdata>*   p_item;
+		pos = 0;
+		p_item = start;
+
+		while (p_item != NULL)
+		{
+			if (pos == index)
+			{
+				break;
+			}
+
+			++pos;
+			p_item = p_item->next;
+		}
+
+		ASSERT(p_item);
+
+		return(p_item->data);
+	}
+
+	/**
+	* const read operator access directly to a position in the list
+	*/
+	const p2List<tdata>& operator +=(const p2List<tdata>& other_list)
+	{
+		p2List_item<tdata>*   p_item = other_list.start;
+
+		while (p_item != NULL)
+		{
+			add(p_item->data);
+			p_item = p_item->next;
+		}
+
+		return(*this);
+	}
+
 };
 #endif /*__p2List_H__*/

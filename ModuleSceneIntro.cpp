@@ -113,7 +113,7 @@ void ModuleSceneIntro::AddRoadSegment(bool obstacles)
 	int segment_index = (obstacles) ? rand() % segments.count() : 0;
 
 	SegmentInfo info;
-	segments.at(segment_index, info);
+	info = segments.at(segment_index)->data;
 
 	Cube base, left_ramp, right_ramp;
 	base.color = White;
