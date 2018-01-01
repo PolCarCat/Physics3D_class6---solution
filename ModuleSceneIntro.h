@@ -23,7 +23,7 @@ public:
 
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 
-	void AddRoadSegment();
+	void AddRoadSegment(bool obstacles = true);
 
 public:
 	float prev_base_pos = 0.0f;

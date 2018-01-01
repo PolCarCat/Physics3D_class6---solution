@@ -36,28 +36,26 @@ bool ModuleSceneIntro::Start()
 	//sensor->SetAsSensor(true);
 	//sensor->collision_listeners.add(this);
 
-	Cube random_c;
+	/*Cube random_c;
 	random_c.size = { 20 ,40 ,5 };
 	random_c.SetPos(0, 0, 50);
-	random_c.SetRotation(75, { 1,0,0 });
-
-	left_ramp.size = { 20, 50, 1200 };
+	random_c.SetRotation(75, { 1,0,0 });	
+	PhysBody3D* random = App->physics->AddBody(random_c, 0);*/
+	
+	left_ramp.size = { 20, 50, 1800 };
 	left_ramp.SetPos(60, -6, 0);
 	left_ramp.SetRotation(280, { 0,0,1 });
-	App->physics->AddBody(left_ramp, 0);
 
-	right_ramp.size = { 20,50,1200 };
+	right_ramp.size = { 20, 50, 1800 };
 	right_ramp.SetPos(-60, -6, 0);
 	right_ramp.SetRotation(80, { 0,0,1 });
-	App->physics->AddBody(right_ramp, 0);
 
-	floor.size = { 100, 0, 1200 };
+	floor.size = { 100, 0, 1800 };
 	floor.color.Set(3.0f, 3.0f, 3.5f);
 	floor.SetPos(0, 0, 0);
 
-
-	PhysBody3D* random = App->physics->AddBody(random_c, 0);
-
+	AddRoadSegment(false);
+	AddRoadSegment();
 
 	return ret;
 }
@@ -110,27 +108,29 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 	LOG("Hit!");
 }
 
-void ModuleSceneIntro::AddRoadSegment()
+void ModuleSceneIntro::AddRoadSegment(bool obstacles)
 {
-	int segment_index = rand() % segments.count();
+	int segment_index = (obstacles) ? rand() % segments.count() : 0;
 
-	Cube base;
 	SegmentInfo info;
 	segments.at(segment_index, info);
+
+	Cube base, left_ramp, right_ramp;
 	base.color = White;
-	base.size = { 40, 20, 5 };
+	base.size = { 120, 1, 600 };
 	App->physics->AddBody(base, 0.0f);
 
-	prev_base_pos += 600;
 	floor.SetPos(0, 0, prev_base_pos);
 
 	left_ramp.SetPos(60, -6, prev_base_pos);
-	//left_ramp.SetRotation(280, { 0,0,1 });
+	left_ramp.SetRotation(280, { 0,0,1 });
 	App->physics->AddBody(left_ramp, 0);
 
 	right_ramp.SetPos(-60, -6, prev_base_pos);
-	//right_ramp.SetRotation(80, { 0,0,1 });
+	right_ramp.SetRotation(80, { 0,0,1 });
 	App->physics->AddBody(right_ramp, 0);
+
+	prev_base_pos += 600;
 }
 
 void ModuleSceneIntro::LoadSegments()
