@@ -5,8 +5,6 @@
 #include "j1Gui.h"
 
 
-
-
 InterfaceElement::InterfaceElement() : enabled(true), next_frame_enabled(true), scale(App->window->GetScale())
 {
 	rect = { 0,0,0,0 };
@@ -117,7 +115,7 @@ bool InterfaceElement::CleanUp()
 	return ret;
 }
 
-SDL_Rect InterfaceElement::getRect() const
+const SDL_Rect& InterfaceElement::getRect() const
 {
 	return rect;
 }
@@ -135,7 +133,7 @@ void InterfaceElement::SetContentRect(int x_margin, int y_margin, int x_margin_2
 	content_rect.h = rect.h - y_margin - y_margin_2;
 }
 
-SDL_Rect InterfaceElement::GetContentRect() const
+const SDL_Rect& InterfaceElement::GetContentRect() const
 {
 	return content_rect;
 }

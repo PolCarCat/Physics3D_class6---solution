@@ -11,9 +11,8 @@
 #include "PugiXml\src\pugixml.hpp"
 #include "Sprite.h"
 #include "Button.h"
-
-
-
+#include "Label.h"
+#include "InterfaceElement.h"
 
 j1Gui::j1Gui(Application* app, bool start_enabled) : Module(app, start_enabled)
 {

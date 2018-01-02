@@ -1,15 +1,13 @@
-#pragma once
+#ifndef __GLOBALS_H__
+#define __GLOBALS_H__
 
 // Warning disabled ---
 #pragma warning( disable : 4577 ) // Warning that exceptions are disabled
 #pragma warning( disable : 4530 ) // Warning that exceptions are disabled
 
-#include <windows.h>
-#include <stdio.h>
+#include "p2Log.h"
 
 #define LOG(format, ...) log(__FILE__, __LINE__, format, __VA_ARGS__);
-
-void log(const char file[], int line, const char* format, ...);
 
 #define CAP(n) ((n <= 0.0f) ? n=0.0f : (n >= 1.0f) ? n=1.0f : n=n)
 
@@ -37,3 +35,5 @@ enum update_status
 #define WIN_FULLSCREEN_DESKTOP false
 #define VSYNC true
 #define TITLE "3D Physics Playground"
+
+#endif

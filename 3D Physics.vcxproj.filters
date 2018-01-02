@@ -117,9 +117,6 @@
     <ClInclude Include="p2Defs.h">
       <Filter>Sources\Containers</Filter>
     </ClInclude>
-    <ClInclude Include="Label.h">
-      <Filter>Sources\Modules\UI</Filter>
-    </ClInclude>
     <ClInclude Include="j1Textures.h">
       <Filter>Sources\Modules</Filter>
     </ClInclude>
@@ -131,6 +128,9 @@
     </ClInclude>
     <ClInclude Include="j1Fonts.h">
       <Filter>Sources\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Label.h">
+      <Filter>Sources\Modules\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -148,9 +148,6 @@
     </ClCompile>
     <ClCompile Include="ModuleWindow.cpp">
       <Filter>Sources\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="log.cpp">
-      <Filter>Sources\Tools</Filter>
     </ClCompile>
     <ClCompile Include="Timer.cpp">
       <Filter>Sources\Tools</Filter>
@@ -209,9 +206,6 @@
     <ClCompile Include="p2Log.cpp">
       <Filter>Sources\Containers</Filter>
     </ClCompile>
-    <ClCompile Include="Label.cpp">
-      <Filter>Sources\Modules\UI</Filter>
-    </ClCompile>
     <ClCompile Include="j1Textures.cpp">
       <Filter>Sources\Modules</Filter>
     </ClCompile>
@@ -220,6 +214,9 @@
     </ClCompile>
     <ClCompile Include="ModuleRender2D.cpp">
       <Filter>Sources\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Label.cpp">
+      <Filter>Sources\Modules\UI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

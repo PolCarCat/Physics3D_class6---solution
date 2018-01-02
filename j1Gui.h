@@ -2,8 +2,6 @@
 #define __j1GUI_H__
 
 #include "Module.h"
-#include "InterfaceElement.h"
-#include "Label.h"
 #include "p2SString.h"
 #include "p2Point.h"
 #include "SDL\include\SDL_rect.h"

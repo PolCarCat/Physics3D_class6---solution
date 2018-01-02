@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __PLAYER_H__
+#define __PLAYER_H__
+
 #include "Module.h"
 #include "Globals.h"
 #include "p2Point.h"
@@ -28,3 +30,5 @@ public:
 	float acceleration;
 	float brake;
 };
+
+#endif

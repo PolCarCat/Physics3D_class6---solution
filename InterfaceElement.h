@@ -1,17 +1,18 @@
 #ifndef __INTERFACE_ELEMENT_H__
 #define __INTERFACE_ELEMENT_H__
 
-#include "p2Defs.h"
-#include "p2Log.h"
-#include "Application.h"
-#include "ModuleRender2D.h"
-#include "j1Textures.h"
+#include "p2Point.h"
+#include "p2List.h"
+#include "SDL\include\SDL_rect.h"
+
+struct SDL_Texture;
 
 class InterfaceElement
 {
 public:
 	InterfaceElement();
 	~InterfaceElement();
+
 	enum Interfacetype
 	{
 		NONE = -1,
@@ -33,9 +34,9 @@ public:
 	virtual bool PostUpdate();
 	virtual bool CleanUp();
 
-	virtual SDL_Rect getRect() const;
+	virtual const SDL_Rect& getRect() const;
 	virtual void SetContentRect(int x_margin = INT_MAX, int y_margin = INT_MAX, int x_margin_2 = INT_MAX, int y_margin_2 = INT_MAX);
-	SDL_Rect GetContentRect() const;
+	const SDL_Rect& GetContentRect() const;
 	virtual int getPositionX() const;
 	virtual int getPositionY() const;
 	virtual void setPosition(int x, int y);

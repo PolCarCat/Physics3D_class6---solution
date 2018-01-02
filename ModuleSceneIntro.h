@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __SCENE_INTRO_H__
+#define __SCENE_INTRO_H__
+
 #include "Module.h"
 #include "p2DynArray.h"
 #include "Globals.h"
@@ -33,3 +35,5 @@ public:
 	void LoadSegments();
 	p2List<SegmentInfo> segments;
 };
+
+#endif

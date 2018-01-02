@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __INPUT_H__
+#define __INPUT_H__
+
 #include "Module.h"
 #include "Globals.h"
 
@@ -106,3 +108,5 @@ private:
 	int mouse_y_motion;
 	//int mouse_z_motion;
 };
+
+#endif

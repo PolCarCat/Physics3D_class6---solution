@@ -1,11 +1,10 @@
 #ifndef __LABEL_H__
 #define __LABEL_H__
 
-
+#include "InterfaceElement.h"
 #include "SDL_ttf\include\SDL_ttf.h"
 #include "SDL\include\SDL_pixels.h"
 #include "p2SString.h"
-#include "InterfaceElement.h"
 
 typedef _TTF_Font Font;
 
