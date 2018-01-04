@@ -49,6 +49,14 @@ void PhysBody3D::SetPos(float x, float y, float z)
 }
 
 // ---------------------------------------------------------
+void PhysBody3D::GetPos(float& x, float& y, float& z) const {
+	btVector3 t = body->getWorldTransform().getOrigin();
+	x = t.m_floats[0];
+	y = t.m_floats[1];
+	z = t.m_floats[2];
+}
+
+// ---------------------------------------------------------
 void PhysBody3D::SetAsSensor(bool is_sensor)
 {
 	if(this->is_sensor != is_sensor)

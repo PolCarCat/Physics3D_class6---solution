@@ -19,6 +19,7 @@ public:
 	void GetTransform(float* matrix) const;
 	void SetTransform(const float* matrix) const;
 	void SetPos(float x, float y, float z);
+	void GetPos(float& x, float& y, float& z) const;
 	void SetAsSensor(bool is_sensor);
 	bool IsSensor() const;
 	void SetEnabled(bool enable);

@@ -18,6 +18,17 @@ struct ObstacleInfo
 	vec3 dims; // dimensions of the object (width, height, depth)
 	float radius;
 	bool dynamic; // is the obstacle dynamic?
+
+	const ObstacleInfo& operator = (const ObstacleInfo& other) {
+		type = other.type;
+		pos = other.pos;
+		rotation = other.rotation;
+		dims = other.dims;
+		radius = other.radius;
+		dynamic = other.dynamic;
+
+		return *this;
+	}
 };
 
 struct SegmentInfo

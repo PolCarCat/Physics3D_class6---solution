@@ -120,8 +120,12 @@ update_status ModulePhysics3D::Update(float dt)
 	{
 		for (p2List_item<PhysBody3D*>* item = bodies.getFirst(); item; item = item->next)
 		{
-			if (item->data->isEnabled())
+			if (item->data->isEnabled()) {
+				float x, y, z;
+				item->data->GetPos(x, y, z);
+				item->data->shape->SetPos(x, y, z);
 				item->data->shape->Render();
+			}
 		}
 
 		world->debugDrawWorld();

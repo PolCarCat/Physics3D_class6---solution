@@ -15,7 +15,7 @@ SegmentInfo::SegmentInfo()
 SegmentInfo::SegmentInfo(const SegmentInfo & other) : rotation(other.rotation), num_obstacles(other.num_obstacles)
 {
 	obstacles = (ObstacleInfo*)malloc(num_obstacles * sizeof ObstacleInfo);
-	for (uint i = 0; i < num_obstacles * sizeof(ObstacleInfo); i++)
+	for (uint i = 0; i < num_obstacles ; i++)
 		obstacles[i] = other.obstacles[i];
 }
 
@@ -24,7 +24,7 @@ const SegmentInfo& SegmentInfo::operator =(const SegmentInfo & other)
 	rotation = other.rotation;
 	num_obstacles = other.num_obstacles;
 	obstacles = (ObstacleInfo*)malloc(num_obstacles * sizeof ObstacleInfo);
-	for (uint i = 0; i < num_obstacles * sizeof(ObstacleInfo); i++)
+	for (uint i = 0; i < num_obstacles; i++)
 		obstacles[i] = other.obstacles[i];
 
 	return *this;

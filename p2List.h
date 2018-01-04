@@ -14,8 +14,9 @@ struct p2List_item
 	p2List_item<tdata>*   next;
 	p2List_item<tdata>*   prev;
 
-	inline p2List_item(const tdata& _data) : data(_data)
+	inline p2List_item(const tdata& _data)
 	{
+		data = _data;
 		next = prev = NULL;
 	}
 

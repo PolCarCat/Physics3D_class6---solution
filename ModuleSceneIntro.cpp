@@ -77,7 +77,7 @@ update_status ModuleSceneIntro::Update(float dt)
 	Plane p(0, 1, 0, 0);
 
 	//Meh
-	if (App->player->pos.y < -30)
+	if (App->player->pos.y < -30 || App->input->GetKey(SDL_SCANCODE_R) == KEY_STATE::KEY_DOWN)
 	{
 		App->Restart();
 	}
@@ -86,13 +86,13 @@ update_status ModuleSceneIntro::Update(float dt)
 	camera_pos.p -= 20;
 	
 
-	left_ramp.Render();
+	/*left_ramp.Render();
 	right_ramp.Render();
-	floor.Render();
+	floor.Render();*/
 
 	p.axis = true;
 	p.wire = true;
-	p.Render();
+	//p.Render();
 	App->camera->Move(normalize(camera_pos - App->camera->Position) * dt * camera_speed * length(camera_pos - App->camera->Position));
 	App->camera->Position.y = 10.0f;
 	App->camera->LookAt(App->player->pos);
@@ -205,7 +205,6 @@ void ModuleSceneIntro::LoadSegments()
 				info.obstacles = (ObstacleInfo*)malloc(info.num_obstacles * sizeof ObstacleInfo);
 				uint i = 0;
 				for (pugi::xml_node obstacle_node : obstacle_info_list_node.children()) {
-					LOG("	Loading obstacle %d", ++i);
 					ObstacleInfo o_info;
 					o_info.dims.x = obstacle_node.attribute("Width").as_float(0.0f);
 					o_info.dims.y = obstacle_node.attribute("Height").as_float(0.0f);
@@ -220,6 +219,7 @@ void ModuleSceneIntro::LoadSegments()
 					o_info.rotation.z = obstacle_node.attribute("RotationZ").as_float(0.0f);
 					o_info.type = (ObstacleType)obstacle_node.attribute("Type").as_int(0);
 					info.obstacles[i] = o_info;
+					LOG("	Loading obstacle %d", ++i);
 				}
 			}
 			segments.add(info);
