@@ -8,6 +8,15 @@ class Primitive;
 class Module;
 
 // =================================================
+
+enum Sensor_type
+{
+	NONE,
+	SPEED,
+	TIME,
+
+};
+
 struct PhysBody3D
 {
 	friend class ModulePhysics3D;
@@ -27,12 +36,14 @@ public:
 	void Destroy();
 	bool ToDestroy() const;
 
+	Sensor_type s_type = NONE;
 private:
 	btRigidBody* body = nullptr;
 	Primitive* shape = nullptr;
 	bool is_sensor = false;
 	bool enabled = true;
 	bool to_be_destroyed = false;
+
 
 public:
 	p2List<Module*> collision_listeners;

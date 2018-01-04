@@ -3,6 +3,7 @@
 #include "ModulePhysics3D.h"
 #include "PhysBody3D.h"
 #include "PhysVehicle3D.h"
+#include "ModulePlayer.h"
 #include "Primitive.h"
 
 #ifdef _DEBUG
@@ -147,6 +148,7 @@ update_status ModulePhysics3D::Update(float dt)
 		}*/
 	}
 
+
 	return UPDATE_CONTINUE;
 }
 
@@ -212,6 +214,33 @@ bool ModulePhysics3D::CleanUp()
 	return true;
 }
 
+
+PhysBody3D* ModulePhysics3D::AddSensor(vec3 pos, bool isspeed)
+{
+	Sphere s; 
+	if (isspeed)
+		s.color = { 0,0,5,5 };
+	
+	else
+		s.color = { 0, 5, 0, 5 };
+
+	s.radius = 5;
+	s.SetPos(pos.x, pos.y, pos.z);
+	PhysBody3D* b = AddBody(s,0);
+
+	if (isspeed)
+		b->s_type = SPEED;
+
+	else	
+		b->s_type = TIME;
+	
+
+	b->collision_listeners.add(App->player);
+	b->SetAsSensor(true);
+
+
+	return b;
+}
 // ---------------------------------------------------------
 PhysBody3D* ModulePhysics3D::AddBody(const Sphere& sphere, float mass)
 {
@@ -235,6 +264,7 @@ PhysBody3D* ModulePhysics3D::AddBody(const Sphere& sphere, float mass)
 	Sphere* s = new Sphere(sphere);
 	pbody->shape = s;
 
+	pbody->s_type = NONE;
 	world->addRigidBody(body);
 	bodies.add(pbody);
 
@@ -265,6 +295,7 @@ PhysBody3D* ModulePhysics3D::AddBody(const Cube& cube, float mass)
 
 	Cube* s = new Cube(cube);
 	pbody->shape = s;
+	pbody->s_type = NONE;
 
 	world->addRigidBody(body);
 	bodies.add(pbody);
@@ -294,6 +325,7 @@ PhysBody3D* ModulePhysics3D::AddBody(const Cylinder& cylinder, float mass)
 
 	Cylinder* s = new Cylinder(cylinder);
 	pbody->shape = s;
+	pbody->s_type = NONE;
 
 	world->addRigidBody(body);
 	bodies.add(pbody);

@@ -5,6 +5,7 @@
 #include "PhysVehicle3D.h"
 #include "PhysBody3D.h"
 
+
 ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, start_enabled), vehicle(NULL)
 {
 	turn = acceleration = brake = 0.0f;
@@ -35,7 +36,7 @@ bool ModulePlayer::Start()
 	float connection_height = 1.2f;
 	float front_wheel_radius = 0.8f;
 	float back_wheel_radius = 1.2f;
-	float wheel_width = 0.7f;
+	float wheel_width = 0.5f;
 	float suspensionRestLength = 1.2f;
 
 	// Don't change anything below this line ------------------
@@ -146,6 +147,7 @@ update_status ModulePlayer::Update(float dt)
 
 	vehicle->Render();
 
+
 	char title[80];
 	sprintf_s(title, "%.1f Km/h", vehicle->GetKmh());
 	App->window->SetTitle(title);
@@ -156,5 +158,22 @@ update_status ModulePlayer::Update(float dt)
 	return UPDATE_CONTINUE;
 }
 
-
+void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
+{
+	if (body2->IsSensor())
+	{
+		if (body2->s_type == SPEED)
+		{
+			vehicle->ApplyEngineForce(4000);
+		}
+	}
+	else if (body1->IsSensor())
+	{
+		if (body1->s_type == SPEED)
+		{
+			vehicle->ApplyEngineForce(8000000);
+			max_sp = 400;
+		}
+	}
+}
 
