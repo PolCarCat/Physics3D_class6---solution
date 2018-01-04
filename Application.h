@@ -38,6 +38,7 @@ private:
 
 	Timer	ms_timer;
 	float	dt;
+	bool	has_to_restart = false;
 	p2List<Module*> list_modules;
 
 public:
@@ -49,11 +50,15 @@ public:
 	update_status Update();
 	bool CleanUp();
 
+	void Restart();
+
 private:
 
 	void AddModule(Module* mod);
 	void PrepareUpdate();
 	void FinishUpdate();
+
+	bool DoRestart();
 };
 
 extern Application* App;

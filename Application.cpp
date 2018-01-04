@@ -88,6 +88,18 @@ void Application::FinishUpdate()
 {
 }
 
+bool Application::DoRestart()
+{
+	bool ret = true;
+
+	ret = scene_intro->CleanUp() && player->CleanUp() && physics->CleanUp();
+	if (ret) {
+		ret = physics->Start() && player->Start() && scene_intro->Start();
+	}
+
+	return ret;
+}
+
 // Call PreUpdate, Update and PostUpdate on all modules
 update_status Application::Update()
 {
@@ -118,6 +130,14 @@ update_status Application::Update()
 		item = item->next;
 	}
 
+
+	if (has_to_restart) {
+		has_to_restart = false;
+		if (DoRestart())
+			ret = UPDATE_CONTINUE;
+		else ret = UPDATE_ERROR;
+	}
+
 	FinishUpdate();
 	return ret;
 }
@@ -133,6 +153,11 @@ bool Application::CleanUp()
 		item = item->prev;
 	}
 	return ret;
+}
+
+void Application::Restart()
+{
+	has_to_restart = true;
 }
 
 void Application::AddModule(Module* mod)

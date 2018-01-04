@@ -4,7 +4,8 @@
 
 SegmentInfo::~SegmentInfo()
 {
-	delete[] obstacles;
+	/*if (obstacles != nullptr)
+		delete[] (obstacles);*/
 }
 
 SegmentInfo::SegmentInfo()
@@ -13,7 +14,7 @@ SegmentInfo::SegmentInfo()
 
 SegmentInfo::SegmentInfo(const SegmentInfo & other) : rotation(other.rotation), num_obstacles(other.num_obstacles)
 {
-	obstacles = new ObstacleInfo[num_obstacles];
+	obstacles = (ObstacleInfo*)malloc(num_obstacles * sizeof ObstacleInfo);
 	for (uint i = 0; i < num_obstacles * sizeof(ObstacleInfo); i++)
 		obstacles[i] = other.obstacles[i];
 }
@@ -22,7 +23,7 @@ const SegmentInfo& SegmentInfo::operator =(const SegmentInfo & other)
 {
 	rotation = other.rotation;
 	num_obstacles = other.num_obstacles;
-	obstacles = new ObstacleInfo[num_obstacles];
+	obstacles = (ObstacleInfo*)malloc(num_obstacles * sizeof ObstacleInfo);
 	for (uint i = 0; i < num_obstacles * sizeof(ObstacleInfo); i++)
 		obstacles[i] = other.obstacles[i];
 

@@ -76,7 +76,7 @@ update_status ModulePhysics3D::PreUpdate(float dt)
 	world->stepSimulation(dt, 15);
 
 	int numManifolds = world->getDispatcher()->getNumManifolds();
-	for(int i = 0; i<numManifolds; i++)
+	for(int i = 0; i < numManifolds; i++)
 	{
 		btPersistentManifold* contactManifold = world->getDispatcher()->getManifoldByIndexInternal(i);
 		btCollisionObject* obA = (btCollisionObject*)(contactManifold->getBody0());
@@ -115,14 +115,15 @@ update_status ModulePhysics3D::Update(float dt)
 {
 	if(App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		debug = !debug;
-	
-	for (p2List_item<PhysBody3D*>* item = bodies.getFirst(); item; item = item->next)
-	{
-		item->data->shape->Render();
-	}
 
-	if(debug == true)
+	if (debug == true)
 	{
+		for (p2List_item<PhysBody3D*>* item = bodies.getFirst(); item; item = item->next)
+		{
+			if (item->data->isEnabled())
+				item->data->shape->Render();
+		}
+
 		world->debugDrawWorld();
 
 		// Render vehicles
@@ -133,13 +134,13 @@ update_status ModulePhysics3D::Update(float dt)
 			item = item->next;
 		}
 
-		if(App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+		/*if(App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 		{
 			Sphere s(1);
 			s.SetPos(App->camera->Position.x, App->camera->Position.y, App->camera->Position.z);
 			float force = 30.0f;
 			AddBody(s)->Push(-(App->camera->Z.x * force), -(App->camera->Z.y * force), -(App->camera->Z.z * force));
-		}
+		}*/
 	}
 
 	return UPDATE_CONTINUE;
@@ -148,6 +149,16 @@ update_status ModulePhysics3D::Update(float dt)
 // ---------------------------------------------------------
 update_status ModulePhysics3D::PostUpdate(float dt)
 {
+	for (p2List_item<PhysBody3D*>* item = bodies.getFirst(); item;)
+	{
+		if (item->data->ToDestroy()) {
+			world->removeCollisionObject(item->data->body);
+			delete item->data;
+			item = item->next;
+			bodies.del(item->prev);
+		}
+		else item = item->next;
+	}
 	return UPDATE_CONTINUE;
 }
 

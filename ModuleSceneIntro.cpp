@@ -43,16 +43,18 @@ bool ModuleSceneIntro::Start()
 	PhysBody3D* random = App->physics->AddBody(random_c, 0);*/
 	
 	left_ramp.size = { 20, 50, 1800 };
-	left_ramp.SetPos(60, -6, 0);
+	left_ramp.SetPos(60, -6, prev_base_pos);
 	left_ramp.SetRotation(280, { 0,0,1 });
 
 	right_ramp.size = { 20, 50, 1800 };
-	right_ramp.SetPos(-60, -6, 0);
+	right_ramp.SetPos(-60, -6, prev_base_pos);
 	right_ramp.SetRotation(80, { 0,0,1 });
 
 	floor.size = { 100, 0, 1800 };
-	floor.color.Set(3.0f, 3.0f, 3.5f);
-	floor.SetPos(0, 0, 0);
+	floor.color = White;
+	floor.SetPos(0, 0, prev_base_pos);
+
+	prev_base_pos = 0;
 
 	AddRoadSegment(false);
 	AddRoadSegment();
@@ -71,21 +73,18 @@ bool ModuleSceneIntro::CleanUp()
 // Update
 update_status ModuleSceneIntro::Update(float dt)
 {
-	float camera_speed = 10.0f;
+	float camera_speed = 5.0f;
 	Plane p(0, 1, 0, 0);
 
 	//Meh
-	if (App->player->pos.z >= 200)
+	if (App->player->pos.y < -30)
 	{
-		vec3 camera_diff = App->camera->Position - App->player->pos;
-		App->player->vehicle->SetPos(App->player->pos.s, App->player->pos.t, -200);
-		btVector3 btpos = App->player->vehicle->vehicle->getChassisWorldTransform().getOrigin();
-		App->player->pos = { btpos.getX(), btpos.getY(), btpos.getZ() };
-		App->camera->Position = App->player->pos + camera_diff;
+		App->Restart();
 	}
 
 	vec3 camera_pos = App->player->pos;
 	camera_pos.p -= 20;
+	
 
 	left_ramp.Render();
 	right_ramp.Render();
@@ -93,7 +92,7 @@ update_status ModuleSceneIntro::Update(float dt)
 
 	p.axis = true;
 	p.wire = true;
-	//p.Render();
+	p.Render();
 	App->camera->Move(normalize(camera_pos - App->camera->Position) * dt * camera_speed * length(camera_pos - App->camera->Position));
 	App->camera->Position.y = 10.0f;
 	App->camera->LookAt(App->player->pos);
@@ -105,7 +104,16 @@ update_status ModuleSceneIntro::Update(float dt)
 
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
-	LOG("Hit!");
+	LOG("Sensor hit!");
+	if (body1->collision_listeners.getFirst()->data == this) {
+		body1->Destroy();
+		body1->SetAsSensor(false);
+	}
+	else {
+		body2->Destroy();
+		body2->SetAsSensor(false);
+	}
+	AddRoadSegment();
 }
 
 void ModuleSceneIntro::AddRoadSegment(bool obstacles)
@@ -115,20 +123,60 @@ void ModuleSceneIntro::AddRoadSegment(bool obstacles)
 	SegmentInfo info;
 	info = segments.at(segment_index)->data;
 
-	Cube base, left_ramp, right_ramp;
+	Cube base, left, right;
 	base.color = White;
-	base.size = { 120, 1, 600 };
+	base.size = { 120, 0, 600 };
+	base.SetPos(0, 0, prev_base_pos);
 	App->physics->AddBody(base, 0.0f);
 
-	floor.SetPos(0, 0, prev_base_pos);
+	left.size = { 20, 50, 600 };
+	left.SetPos(60, -6, prev_base_pos);
+	left.SetRotation(280, { 0,0,1 });
+	App->physics->AddBody(left, 0.0f);
 
-	left_ramp.SetPos(60, -6, prev_base_pos);
-	left_ramp.SetRotation(280, { 0,0,1 });
-	App->physics->AddBody(left_ramp, 0);
+	right.size = { 20, 50, 600 };
+	right.SetPos(-60, -6, prev_base_pos);
+	right.SetRotation(80, { 0,0,1 });
+	App->physics->AddBody(right, 0.0f);
 
-	right_ramp.SetPos(-60, -6, prev_base_pos);
-	right_ramp.SetRotation(80, { 0,0,1 });
-	App->physics->AddBody(right_ramp, 0);
+	Cube s;
+	s.size = vec3(160, 120, 1);
+	s.SetPos(0, 60, prev_base_pos + 200);
+	s.color.Set(1.0f, 1.0f, 1.0f, 0.0f);
+	sensor = App->physics->AddBody(s, 0.0f);
+	sensor->SetAsSensor(true);
+	sensor->collision_listeners.add(this);
+
+	for (uint i = 0; i < info.num_obstacles; i++) {
+		Cube c;
+		Sphere s;
+		ObstacleInfo o_info = info.obstacles[i];
+		switch (o_info.type) {
+		case WALL:
+			c.color = Red;
+			c.size = o_info.dims;
+			c.SetPos(o_info.pos.x, o_info.pos.y, o_info.pos.z + prev_base_pos);
+			c.SetRotation(o_info.rotation.x, { 1,0,0 });
+			c.SetRotation(o_info.rotation.y, { 0,1,0 });
+			c.SetRotation(o_info.rotation.z, { 0,0,1 });
+			App->physics->AddBody(c, 0.0f);
+			break;
+		case BOULDER:
+			s.color = Red;
+			//s.size = o_info.dims;
+			s.SetPos(o_info.pos.x, o_info.pos.y, o_info.pos.z + prev_base_pos);
+			s.SetRotation(o_info.rotation.x, { 1,0,0 });
+			s.SetRotation(o_info.rotation.y, { 0,1,0 });
+			s.SetRotation(o_info.rotation.z, { 0,0,1 });
+			s.radius = o_info.radius;
+			App->physics->AddBody(s, 1.0f);
+			break;
+		}
+	}
+
+	floor.SetPos(0, 0, prev_base_pos - 600);
+	left_ramp.SetPos(60, -6, prev_base_pos - 600);
+	right_ramp.SetPos(-60, -6, prev_base_pos - 600);
 
 	prev_base_pos += 600;
 }
@@ -143,32 +191,36 @@ void ModuleSceneIntro::LoadSegments()
 	}
 	else {
 		pugi::xml_node segments_list_node = segment_doc.child("Segments");
-
+		int j = 0;
 		for (pugi::xml_node segment_node : segments_list_node.children()) {
+			LOG("Loading segment %d", ++j);
 			SegmentInfo info;
 			info.rotation.x = segment_node.attribute("RotationX").as_float(0.0f);
 			info.rotation.y = segment_node.attribute("RotationY").as_float(0.0f);
 			info.rotation.z = segment_node.attribute("RotationZ").as_float(0.0f);
 
 			pugi::xml_node obstacle_info_list_node = segment_node.child("Obstacles");
-			uint obstacle_count = obstacle_info_list_node.attribute("Number").as_uint(0);
-			info.obstacles = new ObstacleInfo[obstacle_count];
-			uint i = 0;
-			for (pugi::xml_node obstacle_node : obstacle_info_list_node.children()) {
-				ObstacleInfo o_info;
-				o_info.dims.x = obstacle_node.attribute("Width").as_float(0.0f);
-				o_info.dims.y = obstacle_node.attribute("Height").as_float(0.0f);
-				o_info.dims.z = obstacle_node.attribute("Depth").as_float(0.0f);
-				o_info.dynamic = obstacle_node.attribute("Dynamic").as_bool(false);
-				o_info.pos.x = obstacle_node.attribute("PosX").as_float(0.0f);
-				o_info.pos.y = obstacle_node.attribute("PosY").as_float(0.0f);
-				o_info.pos.z = obstacle_node.attribute("PosZ").as_float(0.0f);
-				o_info.radius = obstacle_node.attribute("Radius").as_float(0.0f);
-				o_info.rotation.x = obstacle_node.attribute("RotationX").as_float(0.0f);
-				o_info.rotation.y = obstacle_node.attribute("RotationY").as_float(0.0f);
-				o_info.rotation.z = obstacle_node.attribute("RotationZ").as_float(0.0f);
-				o_info.type = (ObstacleType)obstacle_node.attribute("Type").as_int(0);
-				info.obstacles[i] = o_info;
+			info.num_obstacles = obstacle_info_list_node.attribute("Number").as_uint(0);
+			if (info.num_obstacles > 0) {
+				info.obstacles = (ObstacleInfo*)malloc(info.num_obstacles * sizeof ObstacleInfo);
+				uint i = 0;
+				for (pugi::xml_node obstacle_node : obstacle_info_list_node.children()) {
+					LOG("	Loading obstacle %d", ++i);
+					ObstacleInfo o_info;
+					o_info.dims.x = obstacle_node.attribute("Width").as_float(0.0f);
+					o_info.dims.y = obstacle_node.attribute("Height").as_float(0.0f);
+					o_info.dims.z = obstacle_node.attribute("Depth").as_float(0.0f);
+					o_info.dynamic = obstacle_node.attribute("Dynamic").as_bool(false);
+					o_info.pos.x = obstacle_node.attribute("PosX").as_float(0.0f);
+					o_info.pos.y = obstacle_node.attribute("PosY").as_float(0.0f);
+					o_info.pos.z = obstacle_node.attribute("PosZ").as_float(0.0f);
+					o_info.radius = obstacle_node.attribute("Radius").as_float(0.0f);
+					o_info.rotation.x = obstacle_node.attribute("RotationX").as_float(0.0f);
+					o_info.rotation.y = obstacle_node.attribute("RotationY").as_float(0.0f);
+					o_info.rotation.z = obstacle_node.attribute("RotationZ").as_float(0.0f);
+					o_info.type = (ObstacleType)obstacle_node.attribute("Type").as_int(0);
+					info.obstacles[i] = o_info;
+				}
 			}
 			segments.add(info);
 		}

@@ -21,11 +21,17 @@ public:
 	void SetPos(float x, float y, float z);
 	void SetAsSensor(bool is_sensor);
 	bool IsSensor() const;
+	void SetEnabled(bool enable);
+	bool isEnabled() const;
+	void Destroy();
+	bool ToDestroy() const;
 
 private:
 	btRigidBody* body = nullptr;
 	Primitive* shape = nullptr;
 	bool is_sensor = false;
+	bool enabled = true;
+	bool to_be_destroyed = false;
 
 public:
 	p2List<Module*> collision_listeners;

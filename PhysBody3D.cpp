@@ -66,3 +66,24 @@ bool PhysBody3D::IsSensor() const
 {
 	return is_sensor;
 }
+
+void PhysBody3D::SetEnabled(bool enable)
+{
+	enabled = enable;	
+	body->setActivationState(enabled ? ACTIVE_TAG : WANTS_DEACTIVATION);
+}
+
+bool PhysBody3D::isEnabled() const
+{
+	return enabled;
+}
+
+void PhysBody3D::Destroy()
+{
+	to_be_destroyed = true;
+}
+
+bool PhysBody3D::ToDestroy() const
+{
+	return to_be_destroyed;
+}

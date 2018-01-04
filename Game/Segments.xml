@@ -1,7 +1,15 @@
 <Segments>
   <Segment RotationX = "0.0f" RotationY = "0.0f" RotationZ = "0.0f">
+    <Obstacles Number = "0"></Obstacles>
+  </Segment>
+  <Segment RotationX = "0.0f" RotationY = "0.0f" RotationZ = "0.0f">
     <Obstacles Number = "1">
-      <Obstacle Type="0" Width ="50" Height ="50" Depth="50" Dynamic="true" PosX="100" PosY="0" PosZ="0" Radius="0" RotationX="0" RotationY="0" RotationZ="0"/>
+      <Obstacle Type="1" Width ="50" Height ="50" Depth="50" Dynamic="true" PosX="0" PosY="0" PosZ="0" Radius="50" RotationX="0" RotationY="0" RotationZ="0"/>
+    </Obstacles>
+  </Segment>
+  <Segment RotationX = "0.0f" RotationY = "0.0f" RotationZ = "0.0f">
+    <Obstacles Number = "1">
+      <Obstacle Type="0" Width ="50" Height ="50" Depth="50" Dynamic="true" PosX="0" PosY="0" PosZ="0" Radius="0" RotationX="0" RotationY="0" RotationZ="0"/>
     </Obstacles>
   </Segment>
 </Segments>
