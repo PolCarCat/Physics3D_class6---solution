@@ -55,9 +55,9 @@ bool j1Render::Start()
 }
 
 // Called each loop iteration
-update_status j1Render::PreUpdate()
+update_status j1Render::PreUpdate(float dt)
 {
-	SDL_RenderClear(renderer);
+	//SDL_RenderClear(renderer);
 	return UPDATE_CONTINUE;
 }
 
@@ -67,10 +67,10 @@ update_status j1Render::Update(float dt)
 	return UPDATE_CONTINUE;
 }
 
-update_status j1Render::PostUpdate()
+update_status j1Render::PostUpdate(float dt)
 {
-	SDL_SetRenderDrawColor(renderer, background.r, background.g, background.g, background.a);
-	SDL_RenderPresent(renderer);
+	//SDL_SetRenderDrawColor(renderer, background.r, background.g, background.g, background.a);
+	//SDL_RenderPresent(renderer);
 	return UPDATE_CONTINUE;
 }
 

@@ -32,13 +32,13 @@ public:
 	bool Start();
 
 	// Called before all Updates
-	update_status PreUpdate();
+	update_status PreUpdate(float dt);
 
 	// Called every frame
 	update_status Update(float dt);
 
 	// Called after all Updates
-	update_status PostUpdate();
+	update_status PostUpdate(float dt);
 
 	// Called before quitting
 	bool CleanUp() override;
