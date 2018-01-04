@@ -46,7 +46,7 @@ bool j1Gui::Start()
 }
 
 // Update all guis
-update_status j1Gui::PreUpdate()
+update_status j1Gui::PreUpdate(float dt)
 {
 
 	p2List_item<InterfaceElement*>* current_element = elements.getLast();
@@ -78,7 +78,7 @@ update_status j1Gui::Update(float dt)
 }
 
 // Called after all Updates
-update_status j1Gui::PostUpdate()
+update_status j1Gui::PostUpdate(float dt)
 {
 	p2List_item<InterfaceElement*>* current_element = elements.getFirst();
 	while (current_element != NULL)

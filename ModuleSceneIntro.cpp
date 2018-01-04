@@ -1,12 +1,14 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleSceneIntro.h"
+#include "j1Gui.h"
 #include "Primitive.h"
 #include "PhysBody3D.h"
 #include "PhysVehicle3D.h"
 #include "PugiXml\src\pugixml.hpp"
 #include "Time.h"
 #include <Random>
+
 
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
@@ -58,6 +60,13 @@ bool ModuleSceneIntro::Start()
 
 	AddRoadSegment(false);
 	AddRoadSegment();
+
+	uint w = 0;
+	uint h = 0;
+	App->window->GetWindowSize(w, h);
+	Label* timer_label = App->gui->AddLabel(w/2, h/2, 100, "gui/Earth 2073.ttf", { 255,255,255,255 });
+	timer_label->setString("Hola");
+
 
 	return ret;
 }

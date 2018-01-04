@@ -35,9 +35,9 @@ public:
 	bool Start();
 
 	// Called each loop iteration
-	update_status PreUpdate();
+	update_status PreUpdate(float dt);
 	update_status Update(float dt);
-	update_status PostUpdate();
+	update_status PostUpdate(float dt);
 
 	// Called before quitting
 	bool CleanUp();
