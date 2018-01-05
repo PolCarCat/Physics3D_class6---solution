@@ -21,6 +21,14 @@ void PhysBody3D::Push(float x, float y, float z)
 }
 
 // ---------------------------------------------------------
+void PhysBody3D::StopAll() const
+{
+	body->clearForces();
+	body->setLinearVelocity(btVector3(0, 0, 0));
+	body->setAngularVelocity(btVector3(0, 0, 0));
+}
+
+// ---------------------------------------------------------
 void PhysBody3D::GetTransform(float* matrix) const
 {
 	if(body != NULL && matrix != NULL)
@@ -54,6 +62,20 @@ void PhysBody3D::GetPos(float& x, float& y, float& z) const {
 	x = t.m_floats[0];
 	y = t.m_floats[1];
 	z = t.m_floats[2];
+}
+
+// ---------------------------------------------------------
+void PhysBody3D::SetRotation(float x, float y, float z)
+{
+	btQuaternion q;
+	q.setEuler(x, y, z);
+	body->getWorldTransform().setRotation(q);
+}
+
+// ---------------------------------------------------------
+void PhysBody3D::GetRotation(float& x, float& y, float& z) const
+{
+	//Nothing
 }
 
 // ---------------------------------------------------------

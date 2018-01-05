@@ -147,6 +147,10 @@ update_status ModulePlayer::Update(float dt)
 		brake = BRAKE_POWER;
 	}
 
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
+		Reset();
+	}
+
 	if (vehicle->GetKmh() > max_sp)
 		acceleration = -MAX_ACCELERATION;
 
@@ -191,3 +195,11 @@ void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 	}
 }
 
+void ModulePlayer::Reset() {
+	float x, y, z;
+	btTransform transform;
+	vehicle->GetPos(x, y, z);
+	vehicle->SetPos(0, 3, z);
+	vehicle->SetRotation(0, 0, 0);
+	vehicle->StopAll();
+}
