@@ -132,11 +132,6 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		body2->Destroy();
 		body2->SetAsSensor(false);
 	}
-
-	if (body2->s_type == SPEED)
-	{
-		App->player->vehicle->ApplyEngineForce(4000);
-	}
 	
 	AddRoadSegment();
 }
