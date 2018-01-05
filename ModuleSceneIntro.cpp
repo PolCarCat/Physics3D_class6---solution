@@ -70,7 +70,6 @@ bool ModuleSceneIntro::Start()
 	Label* timer_label = App->gui->AddLabel(w/2, h/2, 100, "gui/Earth 2073.ttf", { 255,255,255,255 });
 	timer_label->setString("Hola");
 
-
 	return ret;
 }
 
@@ -94,8 +93,14 @@ update_status ModuleSceneIntro::Update(float dt)
 		App->Restart();
 	}
 
+	vec3 diff_pos;
+	diff_pos.p -= 20;
 	vec3 camera_pos = App->player->pos;
-	camera_pos.p -= 20;
+	float player_y_rot, player_x_rot, player_z_rot;
+	App->player->vehicle->GetRotation(player_x_rot, player_y_rot, player_z_rot);
+	diff_pos = rotate(diff_pos, player_x_rot * 180 / M_PI, {0, 1, 0});
+
+	camera_pos += diff_pos;
 	
 
 	/*left_ramp.Render();
@@ -169,7 +174,7 @@ void ModuleSceneIntro::AddRoadSegment(bool obstacles)
 	sensor->SetVisible(false);
 	
 	if (obstacles) {
-		App->physics->AddSensor({ (float)(rand() % 160 - 80), 3.0f, (float)(rand() % (int)segment_distance - (segment_distance / 2)) + prev_base_pos },(rand()%1));
+		App->physics->AddSensor({ (float)(rand() % 160 - 80), 3.0f, (float)(rand() % (int)segment_distance - (segment_distance / 2)) + prev_base_pos }, (rand()%2));
 
 		for (uint i = 0; i < info.num_obstacles; i++) {
 			Cube c;

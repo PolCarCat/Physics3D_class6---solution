@@ -75,7 +75,7 @@ void PhysBody3D::SetRotation(float x, float y, float z)
 // ---------------------------------------------------------
 void PhysBody3D::GetRotation(float& x, float& y, float& z) const
 {
-	//Nothing
+	body->getWorldTransform().getBasis().getEulerYPR(y, x, z);
 }
 
 // ---------------------------------------------------------

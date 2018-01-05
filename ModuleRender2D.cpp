@@ -247,7 +247,7 @@ bool j1Render::BlitGui(SDL_Texture * texture, int x, int y, const SDL_Rect * sec
 	if (h_flip)
 		flip = SDL_FLIP_HORIZONTAL;
 
-	if (color.r != 255 && color.g != 255 && color.b != 255)
+	if (color.r != 255 || color.g != 255 || color.b != 255)
 		SDL_SetTextureColorMod(texture, color.r, color.g, color.b);
 
 	if (color.a != 255)

@@ -66,7 +66,6 @@ update_status j1Gui::PreUpdate(float dt)
 
 update_status j1Gui::Update(float dt)
 {
-
 	p2List_item<InterfaceElement*>* current_element = elements.getFirst();
 	while (current_element != NULL)
 	{

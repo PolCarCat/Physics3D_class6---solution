@@ -191,8 +191,8 @@ void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		}
 		else
 		{
-			App->scene_intro->added_time += 5;
-			body1->ToDestroy();
+			App->scene_intro->added_time += 10;
+			body1->Destroy();
 		}
 	}
 }
