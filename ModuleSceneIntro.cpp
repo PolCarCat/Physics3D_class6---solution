@@ -169,6 +169,7 @@ void ModuleSceneIntro::AddRoadSegment(bool obstacles)
 		for (uint i = 0; i < info.num_obstacles; i++) {
 			Cube c;
 			Sphere s;
+			Cylinder cy;
 			ObstacleInfo o_info = info.obstacles[i];
 			switch (o_info.type) {
 			case WALL:
@@ -189,6 +190,16 @@ void ModuleSceneIntro::AddRoadSegment(bool obstacles)
 				s.SetRotation(o_info.rotation.z, { 0,0,1 });
 				s.radius = o_info.radius;
 				App->physics->AddBody(s, 10000.0f);
+				break;
+			case CYLINDER:
+				cy.color = Red;
+				cy.height = o_info.dims.y;
+				cy.radius = o_info.radius;
+				cy.SetPos(o_info.pos.x, o_info.pos.y, o_info.pos.z + prev_base_pos);
+				cy.SetRotation(o_info.rotation.x, { 1,0,0 });
+				cy.SetRotation(o_info.rotation.y, { 0,1,0 });
+				cy.SetRotation(o_info.rotation.z, { 0,0,1 });
+				App->physics->AddBody(cy, 10000.0f);
 				break;
 			}
 		}
