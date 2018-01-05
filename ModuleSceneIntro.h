@@ -30,10 +30,11 @@ public:
 public:
 	float prev_base_pos = 0.0f;
 	Cube floor, left_ramp, right_ramp;
-	PhysBody3D* sensor;
+	PhysBody3D* sensor = nullptr;
 
 	void LoadSegments();
 	p2List<SegmentInfo> segments;
+	float segment_distance = 0, segment_width = 0;
 };
 
 #endif

@@ -1,4 +1,4 @@
-<Segments>
+<Segments Width ="80" Length="300">
   <Segment RotationX = "0.0f" RotationY = "0.0f" RotationZ = "0.0f">
     <Obstacles Number = "0"></Obstacles>
   </Segment>

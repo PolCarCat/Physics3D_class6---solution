@@ -133,70 +133,72 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 
 void ModuleSceneIntro::AddRoadSegment(bool obstacles)
 {
-	int segment_index = (obstacles) ? rand() % segments.count() : 0;
+	int segment_index = rand() % segments.count();
 
 	SegmentInfo info;
 	info = segments.at(segment_index)->data;
 
 	Cube base, left, right;
 	base.color = White;
-	base.size = { 120, 0, 600 };
+	base.size = { segment_width, 0, segment_distance };
 	base.SetPos(0, 0, prev_base_pos);
 	App->physics->AddBody(base, 0.0f);
 
-	left.size = { 20, 50, 600 };
-	left.SetPos(60, -6, prev_base_pos);
+	left.size = { 20, 50, segment_distance };
+	left.SetPos(segment_width/2, -6, prev_base_pos);
 	left.SetRotation(300, { 0,0,1 });
 	App->physics->AddBody(left, 0.0f);
 
-	right.size = { 20, 50, 600 };
-	right.SetPos(-60, -6, prev_base_pos);
+	right.size = { 20, 50, segment_distance };
+	right.SetPos(-segment_width/2, -6, prev_base_pos);
 	right.SetRotation(60, { 0,0,1 });
 	App->physics->AddBody(right, 0.0f);
 
 	Cube s;
-	s.size = vec3(160, 120, 1);
-	s.SetPos(0, 60, prev_base_pos + 200);
+	s.size = vec3(segment_width + 80, 120, 1);
+	s.SetPos(0, 60, prev_base_pos + segment_distance/2);
 	s.color.Set(1.0f, 1.0f, 1.0f, 2.0f);
 	sensor = App->physics->AddBody(s, 0.0f);
 	sensor->SetAsSensor(true);
 	sensor->collision_listeners.add(this);
 	sensor->SetVisible(false);
 	
-	App->physics->AddSensor({ (float)(rand() % 160 - 80), 3.0f, (float)(rand() % 600 - 300) + prev_base_pos });
+	if (obstacles) {
+		App->physics->AddSensor({ (float)(rand() % 160 - 80), 3.0f, (float)(rand() % (int)segment_distance - (segment_distance / 2)) + prev_base_pos });
 
-	for (uint i = 0; i < info.num_obstacles; i++) {
-		Cube c;
-		Sphere s;
-		ObstacleInfo o_info = info.obstacles[i];
-		switch (o_info.type) {
-		case WALL:
-			c.color = Red;
-			c.size = o_info.dims;
-			c.SetPos(o_info.pos.x, o_info.pos.y, o_info.pos.z + prev_base_pos);
-			c.SetRotation(o_info.rotation.x, { 1,0,0 });
-			c.SetRotation(o_info.rotation.y, { 0,1,0 });
-			c.SetRotation(o_info.rotation.z, { 0,0,1 });
-			App->physics->AddBody(c, 0.0f);
-			break;
-		case BOULDER:
-			s.color = Red;
-			//s.size = o_info.dims;
-			s.SetPos(o_info.pos.x, o_info.pos.y, o_info.pos.z + prev_base_pos);
-			s.SetRotation(o_info.rotation.x, { 1,0,0 });
-			s.SetRotation(o_info.rotation.y, { 0,1,0 });
-			s.SetRotation(o_info.rotation.z, { 0,0,1 });
-			s.radius = o_info.radius;
-			App->physics->AddBody(s, 10000.0f);
-			break;
+		for (uint i = 0; i < info.num_obstacles; i++) {
+			Cube c;
+			Sphere s;
+			ObstacleInfo o_info = info.obstacles[i];
+			switch (o_info.type) {
+			case WALL:
+				c.color = Red;
+				c.size = o_info.dims;
+				c.SetPos(o_info.pos.x, o_info.pos.y, o_info.pos.z + prev_base_pos);
+				c.SetRotation(o_info.rotation.x, { 1,0,0 });
+				c.SetRotation(o_info.rotation.y, { 0,1,0 });
+				c.SetRotation(o_info.rotation.z, { 0,0,1 });
+				App->physics->AddBody(c, 0.0f);
+				break;
+			case BOULDER:
+				s.color = Red;
+				//s.size = o_info.dims;
+				s.SetPos(o_info.pos.x, o_info.pos.y, o_info.pos.z + prev_base_pos);
+				s.SetRotation(o_info.rotation.x, { 1,0,0 });
+				s.SetRotation(o_info.rotation.y, { 0,1,0 });
+				s.SetRotation(o_info.rotation.z, { 0,0,1 });
+				s.radius = o_info.radius;
+				App->physics->AddBody(s, 10000.0f);
+				break;
+			}
 		}
 	}
 
-	floor.SetPos(0, 0, prev_base_pos - 600);
-	left_ramp.SetPos(60, -6, prev_base_pos - 600);
-	right_ramp.SetPos(-60, -6, prev_base_pos - 600);
+	floor.SetPos(0, 0, prev_base_pos - segment_distance);
+	left_ramp.SetPos(60, -6, prev_base_pos - segment_distance);
+	right_ramp.SetPos(-60, -6, prev_base_pos - segment_distance);
 
-	prev_base_pos += 600;
+	prev_base_pos += segment_distance;
 }
 
 void ModuleSceneIntro::LoadSegments()
@@ -209,6 +211,8 @@ void ModuleSceneIntro::LoadSegments()
 	}
 	else {
 		pugi::xml_node segments_list_node = segment_doc.child("Segments");
+		segment_distance = segments_list_node.attribute("Length").as_float(100.0f);
+		segment_width = segments_list_node.attribute("Width").as_float(80.0f);
 		int j = 0;
 		for (pugi::xml_node segment_node : segments_list_node.children()) {
 			LOG("Loading segment %d", ++j);
