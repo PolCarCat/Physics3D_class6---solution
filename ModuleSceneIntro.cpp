@@ -140,18 +140,18 @@ void ModuleSceneIntro::AddRoadSegment(bool obstacles)
 
 	left.size = { 20, 50, 600 };
 	left.SetPos(60, -6, prev_base_pos);
-	left.SetRotation(280, { 0,0,1 });
+	left.SetRotation(300, { 0,0,1 });
 	App->physics->AddBody(left, 0.0f);
 
 	right.size = { 20, 50, 600 };
 	right.SetPos(-60, -6, prev_base_pos);
-	right.SetRotation(80, { 0,0,1 });
+	right.SetRotation(60, { 0,0,1 });
 	App->physics->AddBody(right, 0.0f);
 
 	Cube s;
 	s.size = vec3(160, 120, 1);
 	s.SetPos(0, 60, prev_base_pos + 200);
-	s.color.Set(1.0f, 1.0f, 1.0f, 0.0f);
+	s.color.Set(1.0f, 1.0f, 1.0f, 2.0f);
 	sensor = App->physics->AddBody(s, 0.0f);
 	sensor->SetAsSensor(true);
 	sensor->collision_listeners.add(this);
@@ -178,7 +178,7 @@ void ModuleSceneIntro::AddRoadSegment(bool obstacles)
 			s.SetRotation(o_info.rotation.y, { 0,1,0 });
 			s.SetRotation(o_info.rotation.z, { 0,0,1 });
 			s.radius = o_info.radius;
-			App->physics->AddBody(s, 1.0f);
+			App->physics->AddBody(s, 10000.0f);
 			break;
 		}
 	}

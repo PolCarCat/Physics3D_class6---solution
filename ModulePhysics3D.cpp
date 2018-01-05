@@ -116,18 +116,18 @@ update_status ModulePhysics3D::Update(float dt)
 	if(App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		debug = !debug;
 
+	for (p2List_item<PhysBody3D*>* item = bodies.getFirst(); item; item = item->next)
+	{
+		if (item->data->isEnabled()) {
+			float x, y, z;
+			item->data->GetPos(x, y, z);
+			item->data->shape->SetPos(x, y, z);
+			item->data->shape->Render();
+		}
+	}
+
 	if (debug == true)
 	{
-		for (p2List_item<PhysBody3D*>* item = bodies.getFirst(); item; item = item->next)
-		{
-			if (item->data->isEnabled()) {
-				float x, y, z;
-				item->data->GetPos(x, y, z);
-				item->data->shape->SetPos(x, y, z);
-				item->data->shape->Render();
-			}
-		}
-
 		world->debugDrawWorld();
 
 		// Render vehicles
