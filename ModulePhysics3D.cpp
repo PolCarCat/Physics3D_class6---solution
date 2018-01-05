@@ -219,25 +219,21 @@ PhysBody3D* ModulePhysics3D::AddSensor(vec3 pos, bool isspeed)
 {
 	Sphere s; 
 	if (isspeed)
-		s.color = { 0,0,5,5 };
-	
+		s.color = { 0, 0, 5, 5 };
 	else
 		s.color = { 0, 5, 0, 5 };
 
 	s.radius = 5;
 	s.SetPos(pos.x, pos.y, pos.z);
-	PhysBody3D* b = AddBody(s,0);
+	PhysBody3D* b = AddBody(s, 0.f);
 
 	if (isspeed)
 		b->s_type = SPEED;
-
-	else	
+	else
 		b->s_type = TIME;
-	
 
 	b->collision_listeners.add(App->player);
 	b->SetAsSensor(true);
-
 
 	return b;
 }

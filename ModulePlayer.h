@@ -29,6 +29,8 @@ public:
 	float turn;
 	float acceleration;
 	float brake;
+	float max_sp = MAX_SPEED;
+	Timer max_sp_timer;
 
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 

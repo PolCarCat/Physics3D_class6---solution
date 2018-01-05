@@ -118,7 +118,12 @@ update_status ModulePlayer::Update(float dt)
 {
 	turn = acceleration = brake = 0.0f;
 
-	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT && vehicle->GetKmh() < MAX_SPEED)
+	if (max_sp_timer.Read() > 5000) {
+		max_sp = MAX_SPEED;
+		max_sp_timer.Stop();
+	}
+
+	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 	{
 		acceleration = MAX_ACCELERATION;
 	}
@@ -139,6 +144,9 @@ update_status ModulePlayer::Update(float dt)
 	{
 		brake = BRAKE_POWER;
 	}
+
+	if (vehicle->GetKmh() > max_sp)
+		acceleration = -MAX_ACCELERATION;
 	
 
 	vehicle->ApplyEngineForce(acceleration);
@@ -172,7 +180,8 @@ void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		if (body1->s_type == SPEED)
 		{
 			vehicle->ApplyEngineForce(8000000);
-			max_sp = 400;
+			max_sp = 10000;
+			max_sp_timer.Start();
 		}
 	}
 }

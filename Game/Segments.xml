@@ -11,6 +11,34 @@
   </Segment>
   <Segment RotationX = "0.0f" RotationY = "0.0f" RotationZ = "0.0f">
     <Obstacles Number = "3">
+      <Obstacle Type="0" Width ="5" Height ="5" Depth="5" Dynamic="true" PosX="-30" PosY="2.5f" PosZ="70" Radius="5" RotationX="0" RotationY="0" RotationZ="0"/>
+      <Obstacle Type="0" Width ="5" Height ="5" Depth="5" Dynamic="true" PosX="-60" PosY="2.5f" PosZ="190" Radius="5" RotationX="0" RotationY="0" RotationZ="0"/>
+      <Obstacle Type="0" Width ="5" Height ="5" Depth="5" Dynamic="true" PosX="40" PosY="2.5f" PosZ="-210" Radius="5" RotationX="0" RotationY="0" RotationZ="0"/>
+    </Obstacles>
+  </Segment>
+  <Segment RotationX = "0.0f" RotationY = "0.0f" RotationZ = "0.0f">
+    <Obstacles Number = "3">
+      <Obstacle Type="0" Width ="5" Height ="5" Depth="5" Dynamic="true" PosX="-10" PosY="2.5f" PosZ="10" Radius="5" RotationX="0" RotationY="0" RotationZ="0"/>
+      <Obstacle Type="0" Width ="5" Height ="5" Depth="5" Dynamic="true" PosX="0" PosY="2.5f" PosZ="0" Radius="5" RotationX="0" RotationY="0" RotationZ="0"/>
+      <Obstacle Type="0" Width ="5" Height ="5" Depth="5" Dynamic="true" PosX="10" PosY="2.5f" PosZ="-10" Radius="5" RotationX="0" RotationY="0" RotationZ="0"/>
+    </Obstacles>
+  </Segment>
+  <Segment RotationX = "0.0f" RotationY = "0.0f" RotationZ = "0.0f">
+    <Obstacles Number = "3">
+      <Obstacle Type="1" Width ="5" Height ="5" Depth="5" Dynamic="true" PosX="-30" PosY="10.f" PosZ="10" Radius="5" RotationX="0" RotationY="0" RotationZ="0"/>
+      <Obstacle Type="1" Width ="5" Height ="5" Depth="5" Dynamic="true" PosX="0" PosY="2.5f" PosZ="200" Radius="5" RotationX="0" RotationY="0" RotationZ="0"/>
+      <Obstacle Type="1" Width ="5" Height ="5" Depth="5" Dynamic="true" PosX="35" PosY="15.f" PosZ="-150" Radius="5" RotationX="0" RotationY="0" RotationZ="0"/>
+    </Obstacles>
+  </Segment>
+  <Segment RotationX = "0.0f" RotationY = "0.0f" RotationZ = "0.0f">
+    <Obstacles Number = "3">
+      <Obstacle Type="0" Width ="5" Height ="5" Depth="5" Dynamic="true" PosX="-10" PosY="2.5f" PosZ="10" Radius="5" RotationX="0" RotationY="0" RotationZ="0"/>
+      <Obstacle Type="0" Width ="5" Height ="5" Depth="5" Dynamic="true" PosX="0" PosY="2.5f" PosZ="0" Radius="5" RotationX="0" RotationY="0" RotationZ="0"/>
+      <Obstacle Type="0" Width ="5" Height ="5" Depth="5" Dynamic="true" PosX="10" PosY="2.5f" PosZ="-10" Radius="5" RotationX="0" RotationY="0" RotationZ="0"/>
+    </Obstacles>
+  </Segment>
+  <Segment RotationX = "0.0f" RotationY = "0.0f" RotationZ = "0.0f">
+    <Obstacles Number = "3">
       <Obstacle Type="0" Width ="5" Height ="5" Depth="5" Dynamic="true" PosX="-10" PosY="2.5f" PosZ="10" Radius="5" RotationX="0" RotationY="0" RotationZ="0"/>
       <Obstacle Type="0" Width ="5" Height ="5" Depth="5" Dynamic="true" PosX="0" PosY="2.5f" PosZ="0" Radius="5" RotationX="0" RotationY="0" RotationZ="0"/>
       <Obstacle Type="0" Width ="5" Height ="5" Depth="5" Dynamic="true" PosX="10" PosY="2.5f" PosZ="-10" Radius="5" RotationX="0" RotationY="0" RotationZ="0"/>

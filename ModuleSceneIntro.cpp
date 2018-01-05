@@ -60,9 +60,7 @@ bool ModuleSceneIntro::Start()
 
 	AddRoadSegment(false);
 	AddRoadSegment();
-
-	App->physics->AddSensor({ 0,3,250 });
-
+	
 	uint w = 0;
 	uint h = 0;
 	App->window->GetWindowSize(w, h);
@@ -163,6 +161,8 @@ void ModuleSceneIntro::AddRoadSegment(bool obstacles)
 	sensor = App->physics->AddBody(s, 0.0f);
 	sensor->SetAsSensor(true);
 	sensor->collision_listeners.add(this);
+	
+	App->physics->AddSensor({ (float)(rand() % 160 - 80), 3.0f, (float)(rand() % 600 - 300) + prev_base_pos });
 
 	for (uint i = 0; i < info.num_obstacles; i++) {
 		Cube c;
