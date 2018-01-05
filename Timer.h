@@ -13,7 +13,7 @@ public:
 
 	void Start();
 	void Stop();
-
+	bool Count(float num);
 	Uint32 Read();
 
 private:

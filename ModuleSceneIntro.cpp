@@ -61,7 +61,7 @@ bool ModuleSceneIntro::Start()
 	AddRoadSegment(false);
 	AddRoadSegment();
 
-	App->physics->AddSensor({ 0,3,250 });
+	App->physics->AddSensor({ 0,3,550 });
 
 	uint w = 0;
 	uint h = 0;

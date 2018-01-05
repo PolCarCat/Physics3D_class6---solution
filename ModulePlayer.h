@@ -4,6 +4,7 @@
 #include "Module.h"
 #include "Globals.h"
 #include "p2Point.h"
+#include "Timer.h"
 
 struct PhysVehicle3D;
 
@@ -33,6 +34,11 @@ public:
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 
 private:
+	bool b_accelerate = false;
+	bool is_accelerating = false;
+	uint acc = 1;
+	uint max_sp = MAX_SPEED;
+	Timer accelerate;
 
 };
 

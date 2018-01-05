@@ -118,9 +118,9 @@ update_status ModulePlayer::Update(float dt)
 {
 	turn = acceleration = brake = 0.0f;
 
-	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT && vehicle->GetKmh() < MAX_SPEED)
+	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT && vehicle->GetKmh() < max_sp)
 	{
-		acceleration = MAX_ACCELERATION;
+		acceleration = MAX_ACCELERATION * acc;
 	}
 
 	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
@@ -139,6 +139,29 @@ update_status ModulePlayer::Update(float dt)
 	{
 		brake = BRAKE_POWER;
 	}
+	
+	if (b_accelerate)
+	{
+		is_accelerating = true;
+		b_accelerate = false;
+		accelerate.Start();
+	}
+
+	if (is_accelerating)
+	{
+		if (accelerate.Count(0.3f))
+		{
+			is_accelerating = false;
+			acc = 1;
+			max_sp = 300;
+		}
+		else
+		{
+			acc = 5;
+			max_sp = 600;
+		}
+	}
+	
 	
 
 	vehicle->ApplyEngineForce(acceleration);
@@ -170,9 +193,9 @@ void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 	else if (body1->IsSensor())
 	{
 		if (body1->s_type == SPEED)
-		{
-			vehicle->ApplyEngineForce(8000000);
-			max_sp = 400;
+		{			
+			b_accelerate = true;
+			body1->ToDestroy();
 		}
 	}
 }
