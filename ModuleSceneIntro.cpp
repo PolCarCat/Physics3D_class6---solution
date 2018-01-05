@@ -26,6 +26,9 @@ bool ModuleSceneIntro::Start()
 
 	srand(time(nullptr));
 
+	countdown.Start();
+	added_time = 0;
+
 	LoadSegments();
 	
 	//App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
@@ -108,6 +111,13 @@ update_status ModuleSceneIntro::Update(float dt)
 	//sensor->GetTransform(&s.transform);
 	//s.Render();
 
+	float curr_time = (15 - countdown.ReadSec() + added_time);
+
+
+	char title[80];
+	sprintf_s(title, "%.1f Km/h, %.1f sec", App->player->vehicle->GetKmh(), curr_time);
+	App->window->SetTitle(title);
+
 	return UPDATE_CONTINUE;
 }
 
@@ -164,7 +174,7 @@ void ModuleSceneIntro::AddRoadSegment(bool obstacles)
 	sensor->SetVisible(false);
 	
 	if (obstacles) {
-		App->physics->AddSensor({ (float)(rand() % 160 - 80), 3.0f, (float)(rand() % (int)segment_distance - (segment_distance / 2)) + prev_base_pos });
+		App->physics->AddSensor({ (float)(rand() % 160 - 80), 3.0f, (float)(rand() % (int)segment_distance - (segment_distance / 2)) + prev_base_pos },(rand()%1));
 
 		for (uint i = 0; i < info.num_obstacles; i++) {
 			Cube c;

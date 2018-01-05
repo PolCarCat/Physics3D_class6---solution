@@ -38,6 +38,11 @@ Uint32 Timer::Read()
 	}
 }
 
+float Timer::ReadSec() const
+{
+	return float(SDL_GetTicks() - started_at) / 1000.0f;
+}
+
 bool Timer::Count(float num)
 {
 	bool ret = false;
