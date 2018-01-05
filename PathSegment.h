@@ -8,6 +8,7 @@
 enum ObstacleType {
 	WALL,
 	BOULDER,
+	CYLINDER,
 };
 
 struct ObstacleInfo
