@@ -143,7 +143,9 @@ update_status ModulePlayer::Update(float dt)
 
 	if(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 	{
-		brake = BRAKE_POWER;
+		if (vehicle->GetKmh() > 0)
+			brake = BRAKE_POWER;
+		else acceleration = -MAX_ACCELERATION;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
@@ -187,7 +189,7 @@ void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 			max_sp = 600;
 			acc = 5;
 			max_sp_timer.Start();
-			body1->ToDestroy();
+			body1->Destroy();
 		}
 	}
 }
