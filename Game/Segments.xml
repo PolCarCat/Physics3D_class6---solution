@@ -1,4 +1,4 @@
-<Segments>
+<Segments Width ="80" Length="300">
   <Segment RotationX = "0.0f" RotationY = "0.0f" RotationZ = "0.0f">
  <Obstacles Number = "7">
       <Obstacle Type="0" Width ="10" Height ="10" Depth="10" Dynamic="true" PosX="60" PosY="5f" PosZ="300" Radius="5" RotationX="0" RotationY="0" RotationZ="0"/>

@@ -119,7 +119,7 @@ update_status ModulePhysics3D::Update(float dt)
 
 	for (p2List_item<PhysBody3D*>* item = bodies.getFirst(); item; item = item->next)
 	{
-		if (item->data->isEnabled()) {
+		if (item->data->isEnabled() && item->data->isVisible()) {
 			float x, y, z;
 			item->data->GetPos(x, y, z);
 			item->data->shape->SetPos(x, y, z);
@@ -356,6 +356,7 @@ PhysVehicle3D* ModulePhysics3D::AddVehicle(const VehicleInfo& info)
 	btRigidBody* body = new btRigidBody(rbInfo);
 	body->setContactProcessingThreshold(BT_LARGE_FLOAT);
 	body->setActivationState(DISABLE_DEACTIVATION);
+	//body->setAngularFactor(btVector3(0, 1, 1));
 
 	world->addRigidBody(body);
 

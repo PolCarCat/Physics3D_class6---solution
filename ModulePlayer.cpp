@@ -118,8 +118,9 @@ update_status ModulePlayer::Update(float dt)
 {
 	turn = acceleration = brake = 0.0f;
 
-	if (max_sp_timer.Read() > 5000) {
+	if (max_sp_timer.Read() > 500) {
 		max_sp = MAX_SPEED;
+		acc = 1;
 		max_sp_timer.Stop();
 	}
 
@@ -180,6 +181,7 @@ void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		{
 			vehicle->ApplyEngineForce(8000000);
 			max_sp = 600;
+			acc = 5;
 			max_sp_timer.Start();
 			body1->ToDestroy();
 		}
