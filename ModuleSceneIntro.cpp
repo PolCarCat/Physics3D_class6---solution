@@ -60,7 +60,7 @@ bool ModuleSceneIntro::Start()
 
 	AddRoadSegment(false);
 	AddRoadSegment();
-	
+
 	uint w = 0;
 	uint h = 0;
 	App->window->GetWindowSize(w, h);

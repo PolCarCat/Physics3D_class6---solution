@@ -42,6 +42,7 @@ private:
 	Primitive* shape = nullptr;
 	bool is_sensor = false;
 	bool enabled = true;
+	bool visible = true;
 	bool to_be_destroyed = false;
 
 

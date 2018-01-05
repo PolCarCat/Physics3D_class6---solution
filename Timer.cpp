@@ -38,4 +38,15 @@ Uint32 Timer::Read()
 	}
 }
 
+bool Timer::Count(float num)
+{
+	bool ret = false;
+	if (num <= ((SDL_GetTicks() - started_at) / 1000.0f))
+	{
+		ret = true;
+	}
+
+	return ret;
+}
+
 
