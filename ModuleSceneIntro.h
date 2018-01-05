@@ -35,6 +35,9 @@ public:
 	void LoadSegments();
 	p2List<SegmentInfo> segments;
 	float segment_distance = 0, segment_width = 0;
+
+	Timer countdown;
+	float added_time = 0;
 };
 
 #endif

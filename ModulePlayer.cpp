@@ -21,6 +21,7 @@ bool ModulePlayer::Start()
 
 	VehicleInfo car;
 
+
 	// Car properties ----------------------------------------
 	car.chassis_size.Set(2, 1, 6);
 	car.chassis_offset.Set(0, 0, 0);
@@ -156,9 +157,6 @@ update_status ModulePlayer::Update(float dt)
 
 	vehicle->Render();
 
-	char title[80];
-	sprintf_s(title, "%.1f Km/h", vehicle->GetKmh());
-	App->window->SetTitle(title);
 
 	btTransform trans = vehicle->vehicle->getChassisWorldTransform();
 	btVector3 btpos = trans.getOrigin();
@@ -183,6 +181,11 @@ void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 			max_sp = 600;
 			acc = 5;
 			max_sp_timer.Start();
+			body1->ToDestroy();
+		}
+		else
+		{
+			App->scene_intro->added_time += 5;
 			body1->ToDestroy();
 		}
 	}

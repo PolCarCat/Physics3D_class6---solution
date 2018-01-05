@@ -15,6 +15,7 @@ public:
 	void Stop();
 	bool Count(float num);
 	Uint32 Read();
+	float ReadSec() const;
 
 private:
 
