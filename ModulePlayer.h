@@ -39,7 +39,6 @@ private:
 	bool b_accelerate = false;
 	bool is_accelerating = false;
 	uint acc = 1;
-	uint max_sp = MAX_SPEED;
 	Timer accelerate;
 
 };

@@ -33,6 +33,8 @@ public:
 	bool IsSensor() const;
 	void SetEnabled(bool enable);
 	bool isEnabled() const;
+	void SetVisible(bool _visible);
+	bool isVisible() const;
 	void Destroy();
 	bool ToDestroy() const;
 

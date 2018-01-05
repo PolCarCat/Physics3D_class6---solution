@@ -86,6 +86,16 @@ bool PhysBody3D::isEnabled() const
 	return enabled;
 }
 
+void PhysBody3D::SetVisible(bool _visible)
+{
+	visible = _visible;
+}
+
+bool PhysBody3D::isVisible() const
+{
+	return visible;
+}
+
 void PhysBody3D::Destroy()
 {
 	to_be_destroyed = true;

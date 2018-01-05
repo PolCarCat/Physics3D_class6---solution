@@ -161,6 +161,7 @@ void ModuleSceneIntro::AddRoadSegment(bool obstacles)
 	sensor = App->physics->AddBody(s, 0.0f);
 	sensor->SetAsSensor(true);
 	sensor->collision_listeners.add(this);
+	sensor->SetVisible(false);
 	
 	App->physics->AddSensor({ (float)(rand() % 160 - 80), 3.0f, (float)(rand() % 600 - 300) + prev_base_pos });
 
