@@ -61,6 +61,8 @@ bool ModuleSceneIntro::Start()
 	AddRoadSegment(false);
 	AddRoadSegment();
 
+	App->physics->AddSensor({ 0,3,250 });
+
 	uint w = 0;
 	uint h = 0;
 	App->window->GetWindowSize(w, h);
@@ -122,6 +124,12 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		body2->Destroy();
 		body2->SetAsSensor(false);
 	}
+
+	if (body2->s_type == SPEED)
+	{
+		App->player->vehicle->ApplyEngineForce(4000);
+	}
+	
 	AddRoadSegment();
 }
 
