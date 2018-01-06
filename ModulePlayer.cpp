@@ -102,6 +102,7 @@ bool ModulePlayer::Start()
 
 	vehicle = App->physics->AddVehicle(car);
 	vehicle->SetPos(0, 5, 10);
+	vehicle->s_type = CAR;
 	
 	return true;
 }
@@ -131,19 +132,38 @@ update_status ModulePlayer::Update(float dt)
 		App->window->Output(2.5f, 5, 5, 0, 0, 0, "PRESS ENTER TO START");
 		App->window->Output(2.5, 8, 8, 0, 0, 0, "RECORD: %d m", App->scene_intro->record * (int)App->scene_intro->segment_distance);
 		if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_REPEAT)
-
 		{
 			in_intro = false;
 			App->scene_intro->countdown.Start();
 		}
 	}
 	else {
-		App->window->Output(pos.x - 2.5f, 5, pos.z + 5, 0, 0, 0, "Spd: %.0f km/h", vehicle->GetKmh());
-		App->window->Output(pos.x - 2.5f, 7, pos.z + 5, 0, 0, 0, "Time left: %.2f s", App->scene_intro->curr_time);
-		App->window->Output(pos.x - 2.5f, 3, pos.z + 5, 0, 0, 0, "Distance: %d m", App->scene_intro->segments_completed * (int)App->scene_intro->segment_distance);
-		App->window->Output(pos.x + 2.5f + 12 * 0.3f, 7, pos.z + 5, 0, 0, 0, "R -> Restart");
-		App->window->Output(pos.x + 2.5f + 19 * 0.3f, 5, pos.z + 5, 0, 0, 0, "SPACE -> Reset car");
-		App->window->Output(pos.x + 5, 3, pos.z + 5, 0, 0, 0, "Record: %d m", App->scene_intro->record * (int)App->scene_intro->segment_distance);
+		float player_y_rot, player_x_rot, player_z_rot;
+		App->player->vehicle->GetRotation(player_x_rot, player_y_rot, player_z_rot);
+
+		vec3 label_pos = { pos.x - 2.5f, 5, pos.z + 5 };
+		label_pos = rotate(label_pos, player_y_rot, { 0, 0, 1 });
+		App->window->Output(label_pos.x, label_pos.y, label_pos.z, 0, 0, 0, "Spd: %.0f km/h", vehicle->GetKmh());
+
+		label_pos = { pos.x - 2.5f, 7, pos.z + 5 };
+		label_pos = rotate(label_pos, player_y_rot, { 0, 0, 1 });
+		App->window->Output(label_pos.x, label_pos.y, label_pos.z, 0, 0, 0, "Time left: %.2f s", App->scene_intro->curr_time);
+
+		label_pos = { pos.x - 2.5f, 3, pos.z + 5 };
+		label_pos = rotate(label_pos, player_y_rot, { 0, 0, 1 });
+		App->window->Output(label_pos.x, label_pos.y, label_pos.z, 0, 0, 0, "Distance: %d m", App->scene_intro->segments_completed * (int)App->scene_intro->segment_distance);
+
+		label_pos = { pos.x + 2.5f + 12 * 0.3f, 7, pos.z + 5 };
+		label_pos = rotate(label_pos, player_y_rot, { 0, 0, 1 });
+		App->window->Output(label_pos.x, label_pos.y, label_pos.z, 0, 0, 0, "R -> Restart");
+
+		label_pos = { pos.x + 2.5f + 19 * 0.3f, 5, pos.z + 5 };
+		label_pos = rotate(label_pos, player_y_rot, { 0, 0, 1 });
+		App->window->Output(label_pos.x, label_pos.y, label_pos.z, 0, 0, 0, "SPACE -> Reset car");
+
+		label_pos = { pos.x + 7, 3, pos.z + 5 };
+		label_pos = rotate(label_pos, player_y_rot, { 0, 0, 1 });
+		App->window->Output(label_pos.x, label_pos.y, label_pos.z, 0, 0, 0, "Record: %d m", App->scene_intro->record * (int)App->scene_intro->segment_distance);
 
 		Runinputs();
 	}

@@ -30,6 +30,7 @@ bool ModuleSceneIntro::Start()
 	added_time = 0;
 
 	LoadSegments();
+	LoadRecord();
 
 	App->camera->LookAt(App->player->pos);
 
@@ -94,21 +95,22 @@ update_status ModuleSceneIntro::Update(float dt)
 
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
-	LOG("Sensor hit!");
-	if (body1->collision_listeners.getFirst()->data == this) {
-		body1->Destroy();
-		body1->SetAsSensor(false);
-		added_time += 1;
-		segments_completed++;
+	if (body1->s_type != NONE && body2->s_type != NONE) {
+		LOG("Sensor hit!");
+		if (body1->collision_listeners.getFirst()->data == this) {
+			body1->Destroy();
+			body1->SetAsSensor(false);
+			added_time += 1;
+			segments_completed++;
+		}
+		else {
+			body2->Destroy();
+			body2->SetAsSensor(false);
+			added_time += 1;
+			segments_completed++;
+		}
+		AddRoadSegment();
 	}
-	else {
-		body2->Destroy();
-		body2->SetAsSensor(false);
-		added_time += 1;
-		segments_completed++;
-	}
-	
-	AddRoadSegment();
 }
 
 void ModuleSceneIntro::AddRoadSegment(bool obstacles)
@@ -142,6 +144,7 @@ void ModuleSceneIntro::AddRoadSegment(bool obstacles)
 	sensor->SetAsSensor(true);
 	sensor->collision_listeners.add(this);
 	sensor->SetVisible(false);
+	sensor->s_type = LIMIT;
 	
 	if (obstacles) {
 		App->physics->AddSensor({ (float)(rand() % (int)(segment_width - segment_width/2)), 3.0f, (float)(rand() % (int)segment_distance - (segment_distance / 2)) + prev_base_pos }, (rand()%2));
@@ -207,18 +210,19 @@ void ModuleSceneIntro::AddRoadSegment(bool obstacles)
 void ModuleSceneIntro::LoadRecord()
 {
 	pugi::xml_document segment_doc;
-	pugi::xml_parse_result result = segment_doc.load_file("Segments.xml");
-
-	record = segment_doc.child("Record").attribute("record").as_int();
+	pugi::xml_parse_result result = segment_doc.load_file("Record.xml");
+	if (result != NULL)
+		record = segment_doc.child("Record").attribute("record").as_int(0);
 }
 
 void ModuleSceneIntro::SetRecord()
 {
 	pugi::xml_document segment_doc;
-	pugi::xml_parse_result result = segment_doc.load_file("Segments.xml");
 
-	segment_doc.append_child("Record").append_attribute("record") = record;
+	pugi::xml_node record_node = segment_doc.append_child("Record");
+	record_node.append_attribute("record") = record;
 
+	segment_doc.save_file("Record.xml");
 }
 
 void ModuleSceneIntro::LoadSegments()

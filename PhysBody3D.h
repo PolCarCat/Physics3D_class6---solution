@@ -15,7 +15,8 @@ enum Sensor_type
 	NONE,
 	SPEED,
 	TIME,
-
+	LIMIT,
+	CAR
 };
 
 struct PhysBody3D

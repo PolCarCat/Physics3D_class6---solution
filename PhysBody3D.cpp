@@ -68,7 +68,7 @@ void PhysBody3D::GetPos(float& x, float& y, float& z) const {
 void PhysBody3D::SetRotation(float x, float y, float z)
 {
 	btQuaternion q;
-	q.setEuler(x, y, z);
+	q.setEuler(y, x, z);
 	body->getWorldTransform().setRotation(q);
 }
 
