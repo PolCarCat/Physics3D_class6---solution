@@ -8,19 +8,20 @@ These game is a procedural generated racing game, the objective is to beat the c
 There are obstacles and powerups, there are two types of powerups, the blue spheres and the green spheres, the blue ones
 give an extra boost to the car and the green ones gives extra time.
 
-### Controlls
+### Controls
 
 ```
 Arrows: Movement
 Intro: start the game
 R: Reset
-Space Reposize the car
+Space: Reposition the car
 ```
 
 ### Issues
 
 We tried to implement a 2D renderer to implement a decent UI made in SDL but we had to give up on that and we end up 
 with a Open GL basic structure.
+There is a bug that at some point the camera starts shaking.
 
 
 ### Links
