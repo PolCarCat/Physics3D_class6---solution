@@ -25,23 +25,21 @@ public:
 
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 
+	void LoadSegments();
 	void AddRoadSegment(bool obstacles = true);
 	void LoadRecord();
 	void SetRecord();
 
 public:
 	float prev_base_pos = 0.0f;
-	Cube floor, left_ramp, right_ramp;
 	PhysBody3D* sensor = nullptr;
 
-	void LoadSegments();
 	p2List<SegmentInfo> segments;
 	float segment_distance = 0, segment_width = 0;
 
 	Timer countdown;
 	float added_time = 0, curr_time = 0;
-	int segments_completed = 0;
-	int record = 0;
+	int segments_completed = 0, view_distance_segments = 0, record = 0;
 };
 
 #endif

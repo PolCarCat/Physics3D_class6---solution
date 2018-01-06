@@ -30,39 +30,15 @@ bool ModuleSceneIntro::Start()
 	added_time = 0;
 
 	LoadSegments();
-	LoadRecord();
-	//App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
+
 	App->camera->LookAt(App->player->pos);
-
-	//s.size = vec3(5, 3, 1);
-	//s.SetPos(0, 2.5f, 20);
-
-	//sensor = App->physics->AddBody(s, 0.0f);
-	//sensor->SetAsSensor(true);
-	//sensor->collision_listeners.add(this);
-
-	/*Cube random_c;
-	random_c.size = { 20 ,40 ,5 };
-	random_c.SetPos(0, 0, 50);
-	random_c.SetRotation(75, { 1,0,0 });	
-	PhysBody3D* random = App->physics->AddBody(random_c, 0);*/
-	
-	left_ramp.size = { 20, 50, 1800 };
-	left_ramp.SetPos(60, -6, prev_base_pos);
-	left_ramp.SetRotation(280, { 0,0,1 });
-
-	right_ramp.size = { 20, 50, 1800 };
-	right_ramp.SetPos(-60, -6, prev_base_pos);
-	right_ramp.SetRotation(80, { 0,0,1 });
-
-	floor.size = { 100, 0, 1800 };
-	floor.color = White;
-	floor.SetPos(0, 0, prev_base_pos);
 
 	prev_base_pos = 0;
 
 	AddRoadSegment(false);
-	AddRoadSegment();
+	for (uint i = 0; i < view_distance_segments; i++) {
+		AddRoadSegment();
+	}
 
 	segments_completed = 0;
 
@@ -81,12 +57,8 @@ bool ModuleSceneIntro::CleanUp()
 update_status ModuleSceneIntro::Update(float dt)
 {
 	float camera_speed = 5.0f;
-	Plane p(0, 1, 0, 0);
-
-
-
+	
 	curr_time = (20 - countdown.ReadSec() + added_time);
-
 
 	if (App->player->pos.y < -30 || App->input->GetKey(SDL_SCANCODE_R) == KEY_STATE::KEY_DOWN || curr_time <= 0)
 	{
@@ -103,29 +75,15 @@ update_status ModuleSceneIntro::Update(float dt)
 	diff_pos = rotate(diff_pos, player_x_rot * 180 / M_PI, {0, 1, 0});
 
 	camera_pos += diff_pos;
-	
-
-	/*left_ramp.Render();
-	right_ramp.Render();
-	floor.Render();*/
-
 
 	if (segments_completed > record)
 	{
 		record = segments_completed;
 	}
 
-	p.axis = true;
-	p.wire = true;
-	//p.Render();
 	App->camera->Move(normalize(camera_pos - App->camera->Position) * dt * camera_speed * length(camera_pos - App->camera->Position));
 	App->camera->Position.y = 10.0f;
 	App->camera->LookAt(App->player->pos);
-	//sensor->GetTransform(&s.transform);
-	//s.Render();
-
-
-
 
 	char title[80];
 	sprintf_s(title, "%.1f Km/h, %.1f sec", App->player->vehicle->GetKmh(), curr_time);
@@ -186,12 +144,13 @@ void ModuleSceneIntro::AddRoadSegment(bool obstacles)
 	sensor->SetVisible(false);
 	
 	if (obstacles) {
-		App->physics->AddSensor({ (float)(rand() % 160 - 80), 3.0f, (float)(rand() % (int)segment_distance - (segment_distance / 2)) + prev_base_pos }, (rand()%2));
+		App->physics->AddSensor({ (float)(rand() % (int)(segment_width - segment_width/2)), 3.0f, (float)(rand() % (int)segment_distance - (segment_distance / 2)) + prev_base_pos }, (rand()%2));
 
 		for (uint i = 0; i < info.num_obstacles; i++) {
 			Cube c;
 			Sphere s;
 			Cylinder cy;
+			PhysBody3D* b1 = nullptr, *b2 = nullptr;
 			ObstacleInfo o_info = info.obstacles[i];
 			switch (o_info.type) {
 			case WALL:
@@ -205,7 +164,6 @@ void ModuleSceneIntro::AddRoadSegment(bool obstacles)
 				break;
 			case BOULDER:
 				s.color = Red;
-				//s.size = o_info.dims;
 				s.SetPos(o_info.pos.x, o_info.pos.y, o_info.pos.z + prev_base_pos);
 				s.SetRotation(o_info.rotation.x, { 1,0,0 });
 				s.SetRotation(o_info.rotation.y, { 0,1,0 });
@@ -223,13 +181,24 @@ void ModuleSceneIntro::AddRoadSegment(bool obstacles)
 				cy.SetRotation(o_info.rotation.z, { 0,0,1 });
 				App->physics->AddBody(cy, 10000.0f);
 				break;
+			case PENDULUM:
+				s.color = Red;
+				s.SetPos(o_info.pos.x, o_info.pos.y, o_info.pos.z + prev_base_pos);
+				s.SetRotation(o_info.rotation.x, { 1,0,0 });
+				s.SetRotation(o_info.rotation.y, { 0,1,0 });
+				s.SetRotation(o_info.rotation.z, { 0,0,1 });
+				s.radius = o_info.radius;
+				b1 = App->physics->AddBody(s, 10000.0f);
+
+				c.size = { 1,1,1 };
+				c.SetPos(0, 50, o_info.pos.z + prev_base_pos);
+				b2 = App->physics->AddBody(c, 0.0f);
+
+				App->physics->AddConstraintHinge(*b1, *b2, { 0, 50 - o_info.pos.y - 1, 0 }, { 0, 0, 0 }, { 0,0,1 }, { 0,0,1 }, true);
+				break;
 			}
 		}
 	}
-
-	floor.SetPos(0, 0, prev_base_pos - segment_distance);
-	left_ramp.SetPos(60, -6, prev_base_pos - segment_distance);
-	right_ramp.SetPos(-60, -6, prev_base_pos - segment_distance);
 
 	prev_base_pos += segment_distance;
 }
@@ -264,6 +233,7 @@ void ModuleSceneIntro::LoadSegments()
 		pugi::xml_node segments_list_node = segment_doc.child("Segments");
 		segment_distance = segments_list_node.attribute("Length").as_float(100.0f);
 		segment_width = segments_list_node.attribute("Width").as_float(80.0f);
+		view_distance_segments = segments_list_node.attribute("ViewDistance").as_int(0);
 		int j = 0;
 		for (pugi::xml_node segment_node : segments_list_node.children()) {
 			LOG("Loading segment %d", ++j);
