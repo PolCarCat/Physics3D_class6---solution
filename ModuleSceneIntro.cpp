@@ -84,7 +84,7 @@ update_status ModuleSceneIntro::Update(float dt)
 
 
 
-	float curr_time = (20 - countdown.ReadSec() + added_time);
+	curr_time = (20 - countdown.ReadSec() + added_time);
 
 
 	if (App->player->pos.y < -30 || App->input->GetKey(SDL_SCANCODE_R) == KEY_STATE::KEY_DOWN || curr_time <= 0)
