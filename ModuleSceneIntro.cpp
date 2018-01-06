@@ -64,11 +64,6 @@ bool ModuleSceneIntro::Start()
 	AddRoadSegment(false);
 	AddRoadSegment();
 
-	uint w = 0;
-	uint h = 0;
-	App->window->GetWindowSize(w, h);
-	Label* timer_label = App->gui->AddLabel(w/2, h/2, 100, "gui/Earth 2073.ttf", { 255,255,255,255 });
-	timer_label->setString("Hola");
 
 	return ret;
 }
@@ -87,10 +82,12 @@ update_status ModuleSceneIntro::Update(float dt)
 	float camera_speed = 5.0f;
 	Plane p(0, 1, 0, 0);
 
+
 	//Meh
 	if (App->player->pos.y < -30 || App->input->GetKey(SDL_SCANCODE_R) == KEY_STATE::KEY_DOWN)
 	{
 		App->Restart();
+		App->player->in_intro = true;
 	}
 
 	vec3 diff_pos;
@@ -122,6 +119,10 @@ update_status ModuleSceneIntro::Update(float dt)
 	char title[80];
 	sprintf_s(title, "%.1f Km/h, %.1f sec", App->player->vehicle->GetKmh(), curr_time);
 	App->window->SetTitle(title);
+
+
+
+	App->window->Output(App->player->pos.x, 5, App->player->pos.z , 0, 0, 0, "HOLA");
 
 	return UPDATE_CONTINUE;
 }

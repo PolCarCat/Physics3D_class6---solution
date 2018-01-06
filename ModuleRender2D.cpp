@@ -64,6 +64,8 @@ update_status j1Render::PreUpdate(float dt)
 update_status j1Render::Update(float dt)
 {
 
+
+
 	return UPDATE_CONTINUE;
 }
 

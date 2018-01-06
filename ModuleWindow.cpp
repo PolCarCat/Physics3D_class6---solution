@@ -1,6 +1,7 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleWindow.h"
+#include "glut\glut.h"
 
 ModuleWindow::ModuleWindow(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -91,4 +92,16 @@ bool ModuleWindow::CleanUp()
 void ModuleWindow::SetTitle(const char* title)
 {
 	SDL_SetWindowTitle(window, title);
+}
+
+
+void ModuleWindow::Output(float x, float y, float z, float r, float g, float b, char *string)
+{
+	glColor3f(r, g, b);
+	glRasterPos3f(x, y,z);
+	int len, i;
+	len = (int)strlen(string);
+	for (i = 0; i < len; i++) {
+		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, string[i]);
+	}
 }

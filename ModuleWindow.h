@@ -30,6 +30,8 @@ public:
 	void GetWindowSize(uint& width, uint& height) const  {width = SCREEN_WIDTH * SCREEN_SIZE; height = SCREEN_HEIGHT * SCREEN_SIZE; }
 
 	float GetScale() const { return SCREEN_SIZE; }
+
+	void Output(float x, float y, float z, float r, float g, float b, char *string);
 };
 
 #endif // __ModuleWindow_H__

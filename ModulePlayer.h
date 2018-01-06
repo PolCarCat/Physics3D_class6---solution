@@ -34,6 +34,7 @@ public:
 	float brake;
 	float max_sp = MAX_SPEED;
 	Timer max_sp_timer;
+	bool in_intro = true;
 
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 
@@ -43,7 +44,7 @@ private:
 	uint acc = 1;
 	Timer accelerate;
 
-
+	void Runinputs();
 };
 
 #endif

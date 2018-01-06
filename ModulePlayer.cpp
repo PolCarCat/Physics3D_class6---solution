@@ -125,33 +125,17 @@ update_status ModulePlayer::Update(float dt)
 		max_sp_timer.Stop();
 	}
 
-	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+	if (in_intro)
 	{
-		acceleration = MAX_ACCELERATION * acc;
+		App->window->Output(2.5f, 5, 5, 0, 0, 0, "PRESS ENTER TO START");
+		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT)
+		{
+			in_intro = false;
+			App->scene_intro->countdown.Start();
+		}
 	}
-
-	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-	{
-		if(turn < TURN_DEGREES)
-			turn +=  TURN_DEGREES;
-	}
-
-	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-	{
-		if(turn > -TURN_DEGREES)
-			turn -= TURN_DEGREES;
-	}
-
-	if(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-	{
-		if (vehicle->GetKmh() > 0)
-			brake = BRAKE_POWER;
-		else acceleration = -MAX_ACCELERATION;
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
-		Reset();
-	}
+	else
+	Runinputs();
 
 	if (vehicle->GetKmh() > max_sp)
 		acceleration = -MAX_ACCELERATION;
@@ -204,4 +188,37 @@ void ModulePlayer::Reset() {
 	vehicle->SetPos(0, 3, z);
 	vehicle->SetRotation(0, 0, 0);
 	vehicle->StopAll();
+
+
+}
+
+void ModulePlayer::Runinputs()
+{
+	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+	{
+		acceleration = MAX_ACCELERATION * acc;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+	{
+		if (turn < TURN_DEGREES)
+			turn += TURN_DEGREES;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+	{
+		if (turn > -TURN_DEGREES)
+			turn -= TURN_DEGREES;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+	{
+		if (vehicle->GetKmh() > 0)
+			brake = BRAKE_POWER;
+		else acceleration = -MAX_ACCELERATION;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
+		Reset();
+	}
 }
