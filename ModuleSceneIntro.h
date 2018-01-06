@@ -37,7 +37,8 @@ public:
 	float segment_distance = 0, segment_width = 0;
 
 	Timer countdown;
-	float added_time = 0;
+	float added_time = 0, curr_time = 0;
+	int segments_completed = 0;
 };
 
 #endif

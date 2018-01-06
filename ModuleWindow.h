@@ -31,7 +31,7 @@ public:
 
 	float GetScale() const { return SCREEN_SIZE; }
 
-	void Output(float x, float y, float z, float r, float g, float b, char *string);
+	void Output(float x, float y, float z, float r, float g, float b, char *format, ...);
 };
 
 #endif // __ModuleWindow_H__

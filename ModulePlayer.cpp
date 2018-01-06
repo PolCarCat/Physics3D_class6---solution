@@ -127,15 +127,22 @@ update_status ModulePlayer::Update(float dt)
 
 	if (in_intro)
 	{
+
 		App->window->Output(2.5f, 5, 5, 0, 0, 0, "PRESS ENTER TO START");
 		if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_REPEAT)
+
 		{
 			in_intro = false;
 			App->scene_intro->countdown.Start();
 		}
 	}
-	else
-	Runinputs();
+	else {
+		App->window->Output(2.5f, 5, 5, 0, 0, 0, "Spd: %f km/h", vehicle->GetKmh());
+		App->window->Output(2.5f, 5, 5, 0, 0, 0, "Time left: %f s", App->scene_intro->curr_time);
+		App->window->Output(2.5f, 5, 5, 0, 0, 0, "Distance: %d m", App->scene_intro->segments_completed * (int)App->scene_intro->segment_distance);
+
+		Runinputs();
+	}
 
 	if (vehicle->GetKmh() > max_sp)
 		acceleration = -MAX_ACCELERATION;

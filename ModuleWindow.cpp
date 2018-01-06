@@ -95,13 +95,23 @@ void ModuleWindow::SetTitle(const char* title)
 }
 
 
-void ModuleWindow::Output(float x, float y, float z, float r, float g, float b, char *string)
+void ModuleWindow::Output(float x, float y, float z, float r, float g, float b, char *format, ...)
 {
-	glColor3f(r, g, b);
-	glRasterPos3f(x, y,z);
-	int len, i;
-	len = (int)strlen(string);
-	for (i = 0; i < len; i++) {
-		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, string[i]);
+	if (format != NULL)
+	{
+		static va_list  ap;
+		static char string[TMP_STRING_SIZE];
+
+		va_start(ap, format);
+		int res = vsnprintf_s(string, TMP_STRING_SIZE, format, ap);
+		va_end(ap);
+
+		glColor3f(r, g, b);
+		glRasterPos3f(x, y, z);
+		int len, i;
+		len = (int)strlen(string);
+		for (i = 0; i < len; i++) {
+			glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, string[i]);
+		}
 	}
 }

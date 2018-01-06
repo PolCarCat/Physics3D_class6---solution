@@ -116,16 +116,16 @@ update_status ModuleSceneIntro::Update(float dt)
 	//sensor->GetTransform(&s.transform);
 	//s.Render();
 
+
 	
+
+	curr_time = (15 - countdown.ReadSec() + added_time);
+
 
 
 	char title[80];
 	sprintf_s(title, "%.1f Km/h, %.1f sec", App->player->vehicle->GetKmh(), curr_time);
 	App->window->SetTitle(title);
-
-
-
-	App->window->Output(App->player->pos.x, 5, App->player->pos.z , 0, 0, 0, "HOLA");
 
 	return UPDATE_CONTINUE;
 }
@@ -136,10 +136,14 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 	if (body1->collision_listeners.getFirst()->data == this) {
 		body1->Destroy();
 		body1->SetAsSensor(false);
+		added_time += 2;
+		segments_completed++;
 	}
 	else {
 		body2->Destroy();
 		body2->SetAsSensor(false);
+		added_time += 2;
+		segments_completed++;
 	}
 	
 	AddRoadSegment();
