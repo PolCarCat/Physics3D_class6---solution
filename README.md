@@ -27,7 +27,7 @@ There is a bug that at some point the camera starts shaking.
 ### Links
 
 * [Repository Link](https://github.com/PolCarCat/Racing-Game) - The main repository
-* [Release](https://maven.apache.org/) - Last version of the game
+* [Release](https://github.com/PolCarCat/Racing-Game/releases/tag/0.5) - Last version of the game
 
 
 
