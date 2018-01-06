@@ -68,7 +68,8 @@ update_status ModuleSceneIntro::Update(float dt)
 	}
 
 	vec3 diff_pos;
-	diff_pos.p -= 20;
+	diff_pos.p -= 20.0f;
+	diff_pos.y += 8.0f;
 	vec3 camera_pos = App->player->pos;
 	float player_y_rot, player_x_rot, player_z_rot;
 	App->player->vehicle->GetRotation(player_x_rot, player_y_rot, player_z_rot);
@@ -82,7 +83,7 @@ update_status ModuleSceneIntro::Update(float dt)
 	}
 
 	App->camera->Move(normalize(camera_pos - App->camera->Position) * dt * camera_speed * length(camera_pos - App->camera->Position));
-	App->camera->Position.y = 10.0f;
+	//App->camera->Position.y = App->player->pos.y + 8.0f;
 	App->camera->LookAt(App->player->pos);
 
 	char title[80];
