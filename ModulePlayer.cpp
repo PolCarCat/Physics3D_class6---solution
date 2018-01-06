@@ -127,19 +127,23 @@ update_status ModulePlayer::Update(float dt)
 
 	if (in_intro)
 	{
-		App->window->Output(2.5f, 5, 5, 0, 0, 0, "PRESS SPACE TO START");
-		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT)
+
+		App->window->Output(2.5f, 5, 5, 0, 0, 0, "PRESS ENTER TO START");
+		App->window->Output(2.5, 8, 8, 0, 0, 0, "RECORD: %d m", App->scene_intro->record * (int)App->scene_intro->segment_distance);
+		if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_REPEAT)
+
 		{
 			in_intro = false;
 			App->scene_intro->countdown.Start();
 		}
 	}
 	else {
-		App->window->Output(pos.x - 2.5f, 7, pos.z + 5, 0, 0, 0, "Spd: %.0f km/h", vehicle->GetKmh());
-		App->window->Output(pos.x - 2.5f, 5, pos.z + 5, 0, 0, 0, "Time left: %.2f s", App->scene_intro->curr_time);
+		App->window->Output(pos.x - 2.5f, 5, pos.z + 5, 0, 0, 0, "Spd: %.0f km/h", vehicle->GetKmh());
+		App->window->Output(pos.x - 2.5f, 7, pos.z + 5, 0, 0, 0, "Time left: %.2f s", App->scene_intro->curr_time);
 		App->window->Output(pos.x - 2.5f, 3, pos.z + 5, 0, 0, 0, "Distance: %d m", App->scene_intro->segments_completed * (int)App->scene_intro->segment_distance);
 		App->window->Output(pos.x + 2.5f + 12 * 0.3f, 7, pos.z + 5, 0, 0, 0, "R -> Restart");
 		App->window->Output(pos.x + 2.5f + 19 * 0.3f, 5, pos.z + 5, 0, 0, 0, "SPACE -> Reset car");
+		App->window->Output(pos.x + 5, 3, pos.z + 5, 0, 0, 0, "Record: %d m", App->scene_intro->record * (int)App->scene_intro->segment_distance);
 
 		Runinputs();
 	}
@@ -182,7 +186,7 @@ void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		}
 		else
 		{
-			App->scene_intro->added_time += 10;
+			App->scene_intro->added_time += 5;
 			body1->Destroy();
 		}
 	}

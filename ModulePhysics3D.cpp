@@ -223,7 +223,7 @@ PhysBody3D* ModulePhysics3D::AddSensor(vec3 pos, bool isspeed)
 	else
 		s.color = { 0, 5, 0, 5 };
 
-	s.radius = 5;
+	s.radius = 3;
 	s.SetPos(pos.x, pos.y, pos.z);
 	PhysBody3D* b = AddBody(s, 0.f);
 

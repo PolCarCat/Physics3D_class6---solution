@@ -27,6 +27,8 @@ public:
 
 	void LoadSegments();
 	void AddRoadSegment(bool obstacles = true);
+	void LoadRecord();
+	void SetRecord();
 
 public:
 	float prev_base_pos = 0.0f;
@@ -37,7 +39,7 @@ public:
 
 	Timer countdown;
 	float added_time = 0, curr_time = 0;
-	int segments_completed = 0, view_distance_segments = 3;
+	int segments_completed = 0, view_distance_segments = 0, record = 0;
 };
 
 #endif

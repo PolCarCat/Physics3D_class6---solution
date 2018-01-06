@@ -30,7 +30,7 @@ bool ModuleSceneIntro::Start()
 	added_time = 0;
 
 	LoadSegments();
-	
+
 	App->camera->LookAt(App->player->pos);
 
 	prev_base_pos = 0;
@@ -40,6 +40,7 @@ bool ModuleSceneIntro::Start()
 		AddRoadSegment();
 	}
 
+	segments_completed = 0;
 
 	return ret;
 }
@@ -48,7 +49,7 @@ bool ModuleSceneIntro::Start()
 bool ModuleSceneIntro::CleanUp()
 {
 	LOG("Unloading Intro scene");
-
+	SetRecord();
 	return true;
 }
 
@@ -56,11 +57,14 @@ bool ModuleSceneIntro::CleanUp()
 update_status ModuleSceneIntro::Update(float dt)
 {
 	float camera_speed = 5.0f;
+	
+	curr_time = (20 - countdown.ReadSec() + added_time);
 
-	if (App->player->pos.y < -30 || App->input->GetKey(SDL_SCANCODE_R) == KEY_STATE::KEY_DOWN)
+	if (App->player->pos.y < -30 || App->input->GetKey(SDL_SCANCODE_R) == KEY_STATE::KEY_DOWN || curr_time <= 0)
 	{
 		App->Restart();
 		App->player->in_intro = true;
+		
 	}
 
 	vec3 diff_pos;
@@ -72,12 +76,14 @@ update_status ModuleSceneIntro::Update(float dt)
 
 	camera_pos += diff_pos;
 
+	if (segments_completed > record)
+	{
+		record = segments_completed;
+	}
+
 	App->camera->Move(normalize(camera_pos - App->camera->Position) * dt * camera_speed * length(camera_pos - App->camera->Position));
 	App->camera->Position.y = 10.0f;
 	App->camera->LookAt(App->player->pos);
-
-	curr_time = (15 - countdown.ReadSec() + added_time);
-
 
 	char title[80];
 	sprintf_s(title, "%.1f Km/h, %.1f sec", App->player->vehicle->GetKmh(), curr_time);
@@ -92,13 +98,13 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 	if (body1->collision_listeners.getFirst()->data == this) {
 		body1->Destroy();
 		body1->SetAsSensor(false);
-		added_time += 2;
+		added_time += 1;
 		segments_completed++;
 	}
 	else {
 		body2->Destroy();
 		body2->SetAsSensor(false);
-		added_time += 2;
+		added_time += 1;
 		segments_completed++;
 	}
 	
@@ -195,6 +201,24 @@ void ModuleSceneIntro::AddRoadSegment(bool obstacles)
 	}
 
 	prev_base_pos += segment_distance;
+}
+
+
+void ModuleSceneIntro::LoadRecord()
+{
+	pugi::xml_document segment_doc;
+	pugi::xml_parse_result result = segment_doc.load_file("Segments.xml");
+
+	record = segment_doc.child("Record").attribute("record").as_int();
+}
+
+void ModuleSceneIntro::SetRecord()
+{
+	pugi::xml_document segment_doc;
+	pugi::xml_parse_result result = segment_doc.load_file("Segments.xml");
+
+	segment_doc.append_child("Record").append_attribute("record") = record;
+
 }
 
 void ModuleSceneIntro::LoadSegments()
