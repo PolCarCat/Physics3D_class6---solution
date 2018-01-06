@@ -128,7 +128,7 @@ update_status ModulePlayer::Update(float dt)
 	if (in_intro)
 	{
 		App->window->Output(2.5f, 5, 5, 0, 0, 0, "PRESS ENTER TO START");
-		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT)
+		if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_REPEAT)
 		{
 			in_intro = false;
 			App->scene_intro->countdown.Start();
@@ -175,7 +175,7 @@ void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		}
 		else
 		{
-			App->scene_intro->added_time += 10;
+			App->scene_intro->added_time += 5;
 			body1->Destroy();
 		}
 	}

@@ -83,8 +83,11 @@ update_status ModuleSceneIntro::Update(float dt)
 	Plane p(0, 1, 0, 0);
 
 
-	//Meh
-	if (App->player->pos.y < -30 || App->input->GetKey(SDL_SCANCODE_R) == KEY_STATE::KEY_DOWN)
+
+	float curr_time = (20 - countdown.ReadSec() + added_time);
+
+
+	if (App->player->pos.y < -30 || App->input->GetKey(SDL_SCANCODE_R) == KEY_STATE::KEY_DOWN || curr_time <= 0)
 	{
 		App->Restart();
 		App->player->in_intro = true;
@@ -113,7 +116,7 @@ update_status ModuleSceneIntro::Update(float dt)
 	//sensor->GetTransform(&s.transform);
 	//s.Render();
 
-	float curr_time = (15 - countdown.ReadSec() + added_time);
+	
 
 
 	char title[80];
