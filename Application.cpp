@@ -7,10 +7,6 @@ Application::Application()
 	audio = new ModuleAudio(this, true);
 	scene_intro = new ModuleSceneIntro(this);
 	renderer3D = new ModuleRenderer3D(this);
-	render = new j1Render(this);
-	font = new j1Fonts(this);
-	gui = new j1Gui(this);
-	tex = new j1Textures(this);
 	camera = new ModuleCamera3D(this);
 	physics = new ModulePhysics3D(this);
 	player = new ModulePlayer(this);
@@ -25,16 +21,13 @@ Application::Application()
 	AddModule(input);
 	AddModule(audio);
 	AddModule(physics);
-	AddModule(font);
-	AddModule(gui);
-	AddModule(tex);
-	
+
 	// Scenes
 	AddModule(scene_intro);
 	AddModule(player);
 
 	// Renderer last!
-	AddModule(render);
+
 	AddModule(renderer3D);
 }
 
