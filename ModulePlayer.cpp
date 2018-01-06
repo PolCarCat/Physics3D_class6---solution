@@ -34,7 +34,7 @@ bool ModulePlayer::Start()
 	car.maxSuspensionForce = 4000.0f;
 
 	// Wheel properties ---------------------------------------
-	float connection_height = 1;
+	float connection_height = 1.2f;
 	float front_wheel_radius = 0.8f;
 	float back_wheel_radius = 1.2f;
 	float wheel_width = 0.5f;
@@ -44,7 +44,7 @@ bool ModulePlayer::Start()
 
 	float front_width = car.chassis_size.x;
 	float back_width = car.chassis_size.x*1.8f;
-	float half_length = car.chassis_size.z*0.9;
+	float half_length = car.chassis_size.z;
 	
 	vec3 direction(0,-1,0);
 	vec3 axis(-1,0,0);
@@ -138,12 +138,12 @@ update_status ModulePlayer::Update(float dt)
 		}
 	}
 	else {
-		App->window->Output(pos.x - 5, 5, pos.z - 10 , 0, 0, 0, "Spd: %.0f km/h", vehicle->GetKmh());
-		App->window->Output(pos.x - 5, 7, pos.z - 10 , 0, 0, 0, "Time left: %.2f s", App->scene_intro->curr_time);
-		App->window->Output(pos.x - 5, 3, pos.z - 10, 0, 0, 0, "Distance: %d m", App->scene_intro->segments_completed * (int)App->scene_intro->segment_distance);
-		App->window->Output(pos.x + 8, 7, pos.z - 10, 0, 0, 0, "R -> Restart");
-		App->window->Output(pos.x + 8, 5, pos.z - 10, 0, 0, 0, "SPACE -> Reset car");
-		App->window->Output(pos.x + 8, 3, pos.z - 10, 0, 0, 0, "Record: %d m", App->scene_intro->record * (int)App->scene_intro->segment_distance);
+		App->window->Output(pos.x - 5, pos.y + 3, pos.z - 10 , 0, 0, 0, "Spd: %.0f km/h", vehicle->GetKmh());
+		App->window->Output(pos.x - 5, pos.y + 5, pos.z - 10 , 0, 0, 0, "Time left: %.2f s", App->scene_intro->curr_time);
+		App->window->Output(pos.x - 5, pos.y + 1, pos.z - 10, 0, 0, 0, "Distance: %d m", App->scene_intro->segments_completed * (int)App->scene_intro->segment_distance);
+		App->window->Output(pos.x + 8, pos.y + 5, pos.z - 10, 0, 0, 0, "R -> Restart");
+		App->window->Output(pos.x + 8, pos.y + 3, pos.z - 10, 0, 0, 0, "SPACE -> Reset car");
+		App->window->Output(pos.x + 8, pos.y + 1, pos.z - 10, 0, 0, 0, "Record: %d m", App->scene_intro->record * (int)App->scene_intro->segment_distance);
 
 		Runinputs();
 	}
@@ -178,7 +178,7 @@ void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 	{
 		if (body1->s_type == SPEED)
 		{
-			vehicle->ApplyEngineForce(8000000);
+			vehicle->ApplyEngineForce(2000000);
 			max_sp = 600;
 			acc = 5;
 			max_sp_timer.Start();
