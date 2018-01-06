@@ -38,7 +38,9 @@
     </Obstacles>
   </Segment>
    <Segment RotationX = "0.0f" RotationY = "0.0f" RotationZ = "0.0f">
-    <Obstacles Number = "0"></Obstacles>
+    <Obstacles Number = "1">
+      <Obstacle Type="1" Width ="60" Height ="10" Depth="10" Dynamic="true" PosX="0" PosY="25" PosZ="0" Radius="50" RotationX="0" RotationY="0" RotationZ="0"/>
+    </Obstacles>
   </Segment>
   <Segment RotationX = "0.0f" RotationY = "0.0f" RotationZ = "0.0f">
     <Obstacles Number = "1">
