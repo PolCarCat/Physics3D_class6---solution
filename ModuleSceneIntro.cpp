@@ -25,6 +25,8 @@ bool ModuleSceneIntro::Start()
 
 	srand(time(nullptr));
 
+	App->window->SetTitle("Infinity Racing");
+
 	countdown.Start();
 	added_time = 0;
 
@@ -85,11 +87,7 @@ update_status ModuleSceneIntro::Update(float dt)
 	App->camera->Move(normalize(camera_pos - App->camera->Position) * dt * camera_speed * length(camera_pos - App->camera->Position));
 	//App->camera->Position.y = App->player->pos.y + 8.0f;
 	App->camera->LookAt(App->player->pos);
-
-	char title[80];
-	sprintf_s(title, "%.1f Km/h, %.1f sec", App->player->vehicle->GetKmh(), curr_time);
-	App->window->SetTitle(title);
-
+	
 	return UPDATE_CONTINUE;
 }
 
