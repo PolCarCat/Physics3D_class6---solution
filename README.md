@@ -2,7 +2,7 @@
 
 Pol Carrera & Marc Moreno
 
-## Getting Started
+### Getting Started
 
 These game is a procedural generated racing game, the objective is to beat the current record in a limited time.
 There are obstacles and powerups, there are two types of powerups, the blue spheres and the green spheres, the blue ones
@@ -23,9 +23,9 @@ We tried to implement a 2D renderer to implement a decent UI made in SDL but we 
 with a Open GL basic structure.
 
 
-## Built With
+### Links
 
-* [Repository Link](http://www.dropwizard.io/1.0.2/docs/) - The main repository
+* [Repository Link](https://github.com/PolCarCat/Racing-Game) - The main repository
 * [Release](https://maven.apache.org/) - Last version of the game
 
 

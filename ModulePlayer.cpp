@@ -138,12 +138,12 @@ update_status ModulePlayer::Update(float dt)
 		}
 	}
 	else {
-		App->window->Output(pos.x - 2.5f, 5, pos.z + 5, 0, 0, 0, "Spd: %.0f km/h", vehicle->GetKmh());
-		App->window->Output(pos.x - 2.5f, 7, pos.z + 5, 0, 0, 0, "Time left: %.2f s", App->scene_intro->curr_time);
-		App->window->Output(pos.x - 2.5f, 3, pos.z + 5, 0, 0, 0, "Distance: %d m", App->scene_intro->segments_completed * (int)App->scene_intro->segment_distance);
-		App->window->Output(pos.x + 2.5f + 12 * 0.3f, 7, pos.z + 5, 0, 0, 0, "R -> Restart");
-		App->window->Output(pos.x + 2.5f + 19 * 0.3f, 5, pos.z + 5, 0, 0, 0, "SPACE -> Reset car");
-		App->window->Output(pos.x + 5, 3, pos.z + 5, 0, 0, 0, "Record: %d m", App->scene_intro->record * (int)App->scene_intro->segment_distance);
+		App->window->Output(pos.x - 5, 5, pos.z - 10 , 0, 0, 0, "Spd: %.0f km/h", vehicle->GetKmh());
+		App->window->Output(pos.x - 5, 7, pos.z - 10 , 0, 0, 0, "Time left: %.2f s", App->scene_intro->curr_time);
+		App->window->Output(pos.x - 5, 3, pos.z - 10, 0, 0, 0, "Distance: %d m", App->scene_intro->segments_completed * (int)App->scene_intro->segment_distance);
+		App->window->Output(pos.x + 8, 7, pos.z - 10, 0, 0, 0, "R -> Restart");
+		App->window->Output(pos.x + 8, 5, pos.z - 10, 0, 0, 0, "SPACE -> Reset car");
+		App->window->Output(pos.x + 8, 3, pos.z - 10, 0, 0, 0, "Record: %d m", App->scene_intro->record * (int)App->scene_intro->segment_distance);
 
 		Runinputs();
 	}
