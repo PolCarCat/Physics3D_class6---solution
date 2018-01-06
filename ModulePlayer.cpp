@@ -34,7 +34,7 @@ bool ModulePlayer::Start()
 	car.maxSuspensionForce = 4000.0f;
 
 	// Wheel properties ---------------------------------------
-	float connection_height = 1.2f;
+	float connection_height = 1;
 	float front_wheel_radius = 0.8f;
 	float back_wheel_radius = 1.2f;
 	float wheel_width = 0.5f;
@@ -44,7 +44,7 @@ bool ModulePlayer::Start()
 
 	float front_width = car.chassis_size.x;
 	float back_width = car.chassis_size.x*1.8f;
-	float half_length = car.chassis_size.z;
+	float half_length = car.chassis_size.z*0.9;
 	
 	vec3 direction(0,-1,0);
 	vec3 axis(-1,0,0);
