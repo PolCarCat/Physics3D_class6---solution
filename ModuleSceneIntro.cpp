@@ -133,10 +133,12 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 	if (body1->collision_listeners.getFirst()->data == this) {
 		body1->Destroy();
 		body1->SetAsSensor(false);
+		added_time += 2;
 	}
 	else {
 		body2->Destroy();
 		body2->SetAsSensor(false);
+		added_time += 2;
 	}
 	
 	AddRoadSegment();
