@@ -100,10 +100,10 @@ void ModuleWindow::Output(float x, float y, float z, float r, float g, float b, 
 	if (format != NULL)
 	{
 		static va_list  ap;
-		static char string[TMP_STRING_SIZE];
+		static char string[256];
 
 		va_start(ap, format);
-		int res = vsnprintf_s(string, TMP_STRING_SIZE, format, ap);
+		int res = vsnprintf_s(string, 256, format, ap);
 		va_end(ap);
 
 		glColor3f(r, g, b);
