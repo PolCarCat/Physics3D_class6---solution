@@ -1,0 +1,18 @@
+version: 1.0.{build}
+image: Visual Studio 2017
+configuration:
+- Debug
+- Release
+build:
+  verbosity: minimal
+before_package:
+- ps: Copy-Item C:\projects\Racing-Game\$env:CONFIGURATION\3DPhysics-class6.exe C:\projects\Racing-Game\Game\.
+artifacts:
+- path: Game
+  name: Game
+  type: WebDeployPackage
+deploy:
+- provider: GitHub
+  auth_token:
+    secure: 2kiyjcjTe5/1TykbUDVVUJUVQ2SEHhq4+KGQac8KbE2SWuAny96ycE2sM8K5t+W3qTEgd216R6BWjJcM6FSX52YWzNPx5oCuI8/6eYRhXlE=
+  draft: true
