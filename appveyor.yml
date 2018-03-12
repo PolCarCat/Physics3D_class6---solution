@@ -6,7 +6,7 @@ configuration:
 build:
   verbosity: minimal
 before_package:
-- ps: Copy-Item C:\projects\Physics3D_class6---solution\$env:CONFIGURATION\3D Physics - class6.exe C:\projects\Physics3D_class6---solution\Game\.
+- ps: Copy-Item C:\projects\Racing-Game\$env:CONFIGURATION\3DPhysics-class6.exe C:\projects\Racing-Game\Game\.
 artifacts:
 - path: Game
   name: Game
